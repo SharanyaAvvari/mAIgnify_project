@@ -1,0 +1,59 @@
+{
+  "770c6586-0be8-4bdb-9596-9477f964f7ef": {
+    "job_id": "770c6586-0be8-4bdb-9596-9477f964f7ef",
+    "user_id": "gqEfjuOsiye8Ue2eX67L7CViF4P2",
+    "prompt": "Perform exploratory data analysis on this dataset",
+    "file_ids": [
+      "d83672c3-0a29-4556-9356-bae1161148bb"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "output_files": [],
+      "output_dir": "770c6586-0be8-4bdb-9596-9477f964f7ef",
+      "summary": "Job completed"
+    },
+    "error": null,
+    "created_at": "2025-10-24T22:40:47.006638",
+    "updated_at": "2025-10-24T22:40:47.011421"
+  },
+  "28059578-1432-45bf-a1ef-274bec25aa00": {
+    "job_id": "28059578-1432-45bf-a1ef-274bec25aa00",
+    "user_id": "gqEfjuOsiye8Ue2eX67L7CViF4P2",
+    "prompt": "Perform exploratory data analysis on this dataset",
+    "file_ids": [
+      "500d504b-9d92-4574-8f21-c1670024aa22"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "output_files": [],
+      "output_dir": "28059578-1432-45bf-a1ef-274bec25aa00",
+      "summary": "Job completed"
+    },
+    "error": null,
+    "created_at": "2025-10-24T22:42:18.608761",
+    "updated_at": "2025-10-24T22:42:18.611761"
+  },
+  "b2d54948-3d48-443e-be7d-767cf8e97530": {
+    "job_id": "b2d54948-3d48-443e-be7d-767cf8e97530",
+    "user_id": "gqEfjuOsiye8Ue2eX67L7CViF4P2",
+    "prompt": "analyse and tell me if it is malignant or bengin",
+    "file_ids": [
+      "73917603-581f-4a88-a5fc-05c03999b73e"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "output_files": [],
+      "output_dir": "b2d54948-3d48-443e-be7d-767cf8e97530",
+      "summary": "Job completed"
+    },
+    "error": null,
+    "created_at": "2025-10-24T23:26:13.499683",
+    "updated_at": "2025-10-24T23:26:13.523260"
+  }
+}

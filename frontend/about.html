@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mAIstro - About Us</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="container navbar">
+            <a href="index.html" class="logo">mAIstro</a>
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="agents.html">Agents</a></li>
+                    <li><a href="about.html" class="active">About Us</a></li>
+                </ul>
+                <div id="auth-container" class="auth-links"></div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section id="about-us-page">
+            <div class="container">
+                <h2>Meet the Team</h2>
+                <div class="team-grid">
+                    <div class="team-card"><img src="https://via.placeholder.com/150" alt="Team member photo" class="team-photo"><h3>Vamshi Katepaka</h3><p class="team-role">Lead Researcher</p><p>Computer Science </p><div class="social-links"><a href="#" target="_blank">LinkedIn</a><a href="#" target="_blank">Twitter</a></div></div>
+                    <div class="team-card"><img src="https://via.placeholder.com/150" alt="Team member photo" class="team-photo"><h3>Sharanya Avvari</h3><p class="team-role">AI/ML Engineer</p><p>Computer Science With Cyber-Security</p><div class="social-links"><a href="#" target="_blank">LinkedIn</a><a href="#" target="_blank">GitHub</a></div></div>
+                    <div class="team-card"><img src="https://via.placeholder.com/150" alt="Team member photo" class="team-photo"><h3>Deeksha Shekapuram</h3><p class="team-role">Data Scientist</p><p>Computer Science With Cyber-Security</p><div class="social-links"><a href="#" target="_blank">LinkedIn</a></div></div>
+                    <div class="team-card"><img src="https://via.placeholder.com/150" alt="Team member photo" class="team-photo"><h3>Varsha Jonnada</h3><p class="team-role">UX/UI Designer</p><p>Computer Science </p><div class="social-links"><a href="#" target="_blank">LinkedIn</a><a href="#" target="_blank">Portfolio</a></div></div>
+                    <div class="team-card"><img src="https://via.placeholder.com/150" alt="Team member photo" class="team-photo"><h3>Pranith Amula</h3><p class="team-role">Project Manager</p><p>Computer Science </p><div class="social-links"><a href="#" target="_blank">GitHub</a></div></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container"><p>&copy; 2025 mAIstro Project.</p></div>
+    </footer>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        
+        // =====================================================================
+        // ===  PASTE YOUR FIREBASE CONFIGURATION OBJECT HERE              ===
+        // =====================================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQ7B-0Hg1SRRaclGxmaDisnld1nFtMuG4",
+            authDomain: "maistro-e93eb.firebaseapp.com",
+            projectId: "maistro-e93eb",
+            storageBucket: "maistro-e93eb.firebasestorage.app",
+            messagingSenderId: "809190380385",
+            appId: "1:809190380385:web:8d545d7595b9eef5076b20",
+            measurementId: "G-9FE2X87ER5"
+        };
+
+        // =====================================================================
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+        const authContainer = document.getElementById('auth-container');
+        const signInWithGoogle = () => { signInWithPopup(auth, provider).catch((error) => console.error("Auth Error", error)); };
+        const handleSignOut = () => { signOut(auth).catch((error) => console.error("Sign Out Error", error)); };
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                authContainer.innerHTML = `<span style="font-weight: 600;">${user.displayName}</span><button id="logout-btn" class="logout-btn">Logout</button>`;
+                document.getElementById('logout-btn').addEventListener('click', handleSignOut);
+            } else {
+                authContainer.innerHTML = `<button id="login-btn" class="login-btn">Login</button><button id="signup-btn" class="signup-btn">Sign Up</button>`;
+                document.getElementById('login-btn').addEventListener('click', signInWithGoogle);
+                document.getElementById('signup-btn').addEventListener('click', signInWithGoogle);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+llm:
+  model: "gpt-4o"
+  api_key: "${OPENAI_API_KEY}"
+  temperature: 0.1
+
+agents:
+  max_steps: 20
+  verbose: true
+
+tools:
+  eda:
+    create_plots: true
+  classification:
+    cv_folds: 10
+
+output:
+  base_dir: "./outputs"
+
+logging:
+  level: "INFO"
+  log_file: "./logs/maistro.log"
