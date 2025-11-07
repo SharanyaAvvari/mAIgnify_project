@@ -18,3 +18,13 @@ PyYAML==6.0
 python-dotenv
 openai
 anthropic==0.18.0
+fastapi==0.104.1
+uvicorn==0.24.0
+python-multipart==0.0.6
+pillow==10.1.0
+numpy==1.24.3
+tensorflow==2.15.0
+# Volume analysis libraries
+nibabel==5.2.0
+scipy==1.11.4
+# or use tensorflow-cpu==2.15.0 for CPU-only version

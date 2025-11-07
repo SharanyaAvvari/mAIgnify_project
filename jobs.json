@@ -55,5 +55,253 @@
     "error": null,
     "created_at": "2025-10-24T23:26:13.499683",
     "updated_at": "2025-10-24T23:26:13.523260"
+  },
+  "2d00bbf6-63f9-4c5d-8a3c-9607948db294": {
+    "job_id": "2d00bbf6-63f9-4c5d-8a3c-9607948db294",
+    "user_id": "user@gmail.com",
+    "prompt": "analyze this image and say if it is malignant or benign",
+    "file_ids": [
+      "2043d836-b0b5-4302-8f22-3f1e707e654e"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "output_files": [
+        {
+          "name": "demo_result.txt",
+          "path": "2d00bbf6-63f9-4c5d-8a3c-9607948db294\\demo_result.txt",
+          "size": 144,
+          "type": ".txt"
+        }
+      ],
+      "output_dir": "2d00bbf6-63f9-4c5d-8a3c-9607948db294",
+      "summary": "Demo mode - job completed"
+    },
+    "error": null,
+    "created_at": "2025-10-26T23:45:27.000228",
+    "updated_at": "2025-10-26T23:45:29.021370"
+  },
+  "b2dd72bc-6c9c-4ddf-b8f1-715a7e3536e6": {
+    "job_id": "b2dd72bc-6c9c-4ddf-b8f1-715a7e3536e6",
+    "user_id": "user@gmail.com",
+    "prompt": "analyze the pet sca image and say whether it is malignant or bengin",
+    "file_ids": [
+      "3228a418-4dc3-46ba-b18a-201473bf4ea4"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "output_files": [
+        {
+          "name": "demo_result.txt",
+          "path": "b2dd72bc-6c9c-4ddf-b8f1-715a7e3536e6\\demo_result.txt",
+          "size": 156,
+          "type": ".txt"
+        }
+      ],
+      "output_dir": "b2dd72bc-6c9c-4ddf-b8f1-715a7e3536e6",
+      "summary": "Demo mode - job completed"
+    },
+    "error": null,
+    "created_at": "2025-10-27T00:06:46.325444",
+    "updated_at": "2025-10-27T00:06:48.351219"
+  },
+  "496970a1-d771-4680-b5fa-89daca7c5594": {
+    "job_id": "496970a1-d771-4680-b5fa-89daca7c5594",
+    "user_id": "user@gmail.com",
+    "prompt": "Classify this image as malignant or benign",
+    "file_ids": [
+      "2043d836-b0b5-4302-8f22-3f1e707e654e"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "output_files": [
+        {
+          "name": "demo_result.txt",
+          "path": "496970a1-d771-4680-b5fa-89daca7c5594\\demo_result.txt",
+          "size": 131,
+          "type": ".txt"
+        }
+      ],
+      "output_dir": "496970a1-d771-4680-b5fa-89daca7c5594",
+      "summary": "Demo mode - job completed"
+    },
+    "error": null,
+    "created_at": "2025-10-27T00:07:46.237515",
+    "updated_at": "2025-10-27T00:07:48.265635"
+  },
+  "47edcdf9-83bc-4d14-ae13-5fbed44de5f3": {
+    "job_id": "47edcdf9-83bc-4d14-ae13-5fbed44de5f3",
+    "user_id": "user@gmail.com",
+    "prompt": "Classify this image as malignant or benign",
+    "file_ids": [
+      "65e3b231-59ef-4f92-8a7b-194a7fc525fa"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "output_files": [
+        {
+          "name": "demo_result.txt",
+          "path": "47edcdf9-83bc-4d14-ae13-5fbed44de5f3\\demo_result.txt",
+          "size": 131,
+          "type": ".txt"
+        }
+      ],
+      "output_dir": "47edcdf9-83bc-4d14-ae13-5fbed44de5f3",
+      "summary": "Demo mode - job completed"
+    },
+    "error": null,
+    "created_at": "2025-10-27T00:29:54.807947",
+    "updated_at": "2025-10-27T00:29:56.813757"
+  },
+  "d3407e8a-a90a-41fd-ade2-71fa69cc68e4": {
+    "job_id": "d3407e8a-a90a-41fd-ade2-71fa69cc68e4",
+    "user_id": "user@gmail.com",
+    "prompt": "Classify the image as malignant or bengin",
+    "file_ids": [
+      "e8551422-a324-4794-b4ad-b5a4ca15a597"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "output_files": [
+        {
+          "name": "demo_result.txt",
+          "path": "d3407e8a-a90a-41fd-ade2-71fa69cc68e4\\demo_result.txt",
+          "size": 130,
+          "type": ".txt"
+        }
+      ],
+      "output_dir": "d3407e8a-a90a-41fd-ade2-71fa69cc68e4",
+      "summary": "Demo mode - job completed"
+    },
+    "error": null,
+    "created_at": "2025-10-27T10:07:28.348012",
+    "updated_at": "2025-10-27T10:07:30.357634"
+  },
+  "0b67c986-f5a2-458f-b609-ad4df8cad72a": {
+    "job_id": "0b67c986-f5a2-458f-b609-ad4df8cad72a",
+    "user_id": "sharanyaavvari@gmail.com",
+    "prompt": "Perform comprehensive EDA on this dataset",
+    "file_ids": [
+      "882ffac0-9c08-4ced-878e-e8406f9ad36a"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "output_files": [
+        {
+          "name": "demo_result.txt",
+          "path": "0b67c986-f5a2-458f-b609-ad4df8cad72a\\demo_result.txt",
+          "size": 130,
+          "type": ".txt"
+        }
+      ],
+      "output_dir": "0b67c986-f5a2-458f-b609-ad4df8cad72a",
+      "summary": "Demo mode - job completed"
+    },
+    "error": null,
+    "created_at": "2025-10-27T11:15:39.387478",
+    "updated_at": "2025-10-27T11:15:41.405067"
+  },
+  "53f123af-0cd0-476b-b4d4-7a247cf120aa": {
+    "job_id": "53f123af-0cd0-476b-b4d4-7a247cf120aa",
+    "user_id": "sharanyaavvari@gmail.com",
+    "prompt": "Perform comprehensive EDA on this dataset",
+    "file_ids": [
+      "8cc52238-59f1-40cf-81a3-c6fc8844b8b5"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "output_files": [
+        {
+          "name": "demo_result.txt",
+          "path": "53f123af-0cd0-476b-b4d4-7a247cf120aa\\demo_result.txt",
+          "size": 130,
+          "type": ".txt"
+        }
+      ],
+      "output_dir": "53f123af-0cd0-476b-b4d4-7a247cf120aa",
+      "summary": "Demo mode - job completed"
+    },
+    "error": null,
+    "created_at": "2025-10-27T11:16:24.826453",
+    "updated_at": "2025-10-27T11:16:26.838618"
+  },
+  "f1489c30-170f-4817-9138-feab36881396": {
+    "job_id": "f1489c30-170f-4817-9138-feab36881396",
+    "user_id": "sharanyaavvari@gmail.com",
+    "prompt": "Classify the image as malignant or benign",
+    "file_ids": [
+      "523683bc-5fad-4f17-b9b3-d412ab6a489a"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "agent_used": "None",
+      "output_files": [
+        {
+          "name": "ai_response.txt",
+          "path": "f1489c30-170f-4817-9138-feab36881396\\ai_response.txt",
+          "size": 257,
+          "type": ".txt"
+        },
+        {
+          "name": "result.json",
+          "path": "f1489c30-170f-4817-9138-feab36881396\\result.json",
+          "size": 319,
+          "type": ".json"
+        }
+      ],
+      "output_dir": "f1489c30-170f-4817-9138-feab36881396",
+      "summary": "Processed by None: \u274c No AI models configured. Please set at least one API key:\n- ANTHROPIC_API_KEY (Claude)\n- OPENAI_API_KEY (GPT-4)\n- GEMINI_API_KEY (Gemini)\n- COHERE_API_KEY (Cohere)..."
+    },
+    "error": null,
+    "created_at": "2025-10-27T11:51:42.058536",
+    "updated_at": "2025-10-27T11:51:42.082084"
+  },
+  "0f82be4c-414e-4459-9e23-9c0373155803": {
+    "job_id": "0f82be4c-414e-4459-9e23-9c0373155803",
+    "user_id": "sharanyaavvari@gmail.com",
+    "prompt": "Classify the image as malignant or benign",
+    "file_ids": [
+      "65979aa0-78e5-42eb-88ee-97d34adaf802"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "result": {
+      "status": "success",
+      "agent_used": "None",
+      "output_files": [
+        {
+          "name": "ai_response.txt",
+          "path": "0f82be4c-414e-4459-9e23-9c0373155803\\ai_response.txt",
+          "size": 257,
+          "type": ".txt"
+        },
+        {
+          "name": "result.json",
+          "path": "0f82be4c-414e-4459-9e23-9c0373155803\\result.json",
+          "size": 319,
+          "type": ".json"
+        }
+      ],
+      "output_dir": "0f82be4c-414e-4459-9e23-9c0373155803",
+      "summary": "Processed by None: \u274c No AI models configured. Please set at least one API key:\n- ANTHROPIC_API_KEY (Claude)\n- OPENAI_API_KEY (GPT-4)\n- GEMINI_API_KEY (Gemini)\n- COHERE_API_KEY (Cohere)..."
+    },
+    "error": null,
+    "created_at": "2025-10-27T12:04:28.550111",
+    "updated_at": "2025-10-27T12:04:28.567099"
   }
 }

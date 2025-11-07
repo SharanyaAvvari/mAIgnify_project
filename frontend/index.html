@@ -3,523 +3,700 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mAIstro - Home</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>mAIgnify - Home</title>
+    <link rel="icon" href="assets/maignify-logo.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Additional styles for job results */
-        .results-container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        .job-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        .job-status {
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        .status-queued { background: #374151; color: #9CA3AF; }
-        .status-running { background: #3B82F6; color: white; }
-        .status-completed { background: #10B981; color: white; }
-        .status-failed { background: #EF4444; color: white; }
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #374151;
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-        .progress-fill {
-            height: 100%;
-            background: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-        .output-files {
-            margin-top: 15px;
-        }
-        .file-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 12px;
-            background: #374151;
-            border-radius: 6px;
-            margin-bottom: 8px;
-        }
-        .download-btn {
-            background: var(--primary-color);
+        #hero {
+            position: relative;
+            text-align: center;
+            padding: 100px 0 140px 0;
             color: white;
-            padding: 4px 12px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: background 0.3s;
+            background-image: url('assets/medical-background.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 500px;
         }
-        .download-btn:hover {
-            background: var(--primary-hover);
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(17, 24, 39, 0.6);
+            z-index: 1;
         }
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #374151;
-            border-top: 3px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .hero-content { position: relative; z-index: 2; }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .examples-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: var(--bg-white);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-        }
-        .example-item {
-            padding: 12px;
-            margin: 8px 0;
-            background: #374151;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .example-item:hover {
-            background: #4B5563;
-        }
-        .example-title {
+        .user-info span {
             font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 4px;
-        }
-        .example-prompt {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
+            color: var(--text-primary);
         }
     </style>
 </head>
 <body>
     <header class="header">
         <nav class="container navbar">
-            <a href="index.html" class="logo">mAIstro</a>
+            <a href="index.html" class="logo">
+                <img src="assets/maignify-logo.png" alt="mAIgnify Logo">
+                <span id="logo-text">mAIgnify</span>
+            </a>
             <div class="nav-menu">
                 <ul class="nav-links">
                     <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="#features">Features</a></li>
+                    <li><a href="features.html">Features</a></li>
                     <li><a href="agents.html">Agents</a></li>
                     <li><a href="about.html">About Us</a></li>
+                    <li id="auth-section"></li>
                 </ul>
-                <div id="auth-container" class="auth-links"></div>
             </div>
         </nav>
     </header>
+    
     <main>
         <section id="hero">
-             <div class="hero-content">
+            <div class="hero-content">
                 <h1 id="welcome-message">Automate Medical AI with Simple Language</h1>
-                <p>mAIstro is an open-source, multi-agent system for end-to-end development of radiomics and deep learning models.</p>
-             </div>
-        </section>
-        <div id="input-tray-container" class="input-tray-container"></div>
-        
-        <!-- Results Section -->
-        <div id="results-section" class="results-container" style="display: none;"></div>
-        
-        <section id="features">
-            <div class="container">
-                <h2>A Smarter Workflow for Medical AI</h2>
-                <div class="features-grid">
-                    <div class="feature-card"><div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><h3>Natural Language Interface</h3><p>Orchestrate complex AI workflows, from data analysis to model deployment, using simple text commands.</p></div>
-                    <div class="feature-card"><div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line></svg></div><h3>Multi-Agent System</h3><p>A master agent intelligently delegates tasks to specialized agents for EDA, segmentation, classification, and more.</p></div>
-                    <div class="feature-card"><div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg></div><h3>End-to-End Automation</h3><p>mAIstro handles the entire pipeline, including feature extraction, model training, validation, and inference.</p></div>
-                    <div class="feature-card"><div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg></div><h3>Open & Extensible</h3><p>Fully open-source and LLM-agnostic, allowing for custom tools and offline use in secure environments.</p></div>
-                </div>
+                <p>mAIgnify is an open-source, multi-agent system for end-to-end development of radiomics and deep learning models.</p>
             </div>
         </section>
+
+        <div id="input-tray-container" class="input-tray-container"></div>
+        <section id="output-container" class="container"></section>
     </main>
+
+    <aside id="history-panel">
+        <div class="history-header">
+            <h3>History</h3>
+            <button id="close-history-btn" title="Close history">&times;</button>
+        </div>
+        <div id="history-list" class="history-list"></div>
+        <div class="history-footer">
+            <button id="clear-history-btn" class="clear-history-btn">Clear All History</button>
+        </div>
+    </aside>
+    <div id="history-overlay"></div>
+
     <footer>
-        <div class="container"><p>&copy; 2025 mAIstro Project.</p></div>
+        <div class="container"><p>&copy; 2025 mAIgnify Project.</p></div>
     </footer>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // ========================================================================
+        // CRITICAL: PREVENT ALL PAGE REFRESHES - MUST BE FIRST!
+        // ========================================================================
         
-        // Firebase config
+        window.addEventListener('submit', function(e) {
+            console.log('⛔ BLOCKING form submission');
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return false;
+        }, true);
+
+        window.addEventListener('beforeunload', function(e) {
+            console.log('⚠️ Page trying to unload - checking if intentional');
+            if (!window.allowNavigation) {
+                e.preventDefault();
+                e.returnValue = '';
+                console.log('⛔ BLOCKED unintentional page unload');
+                return '';
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link && link.href && !link.href.startsWith('javascript:') && link.href !== window.location.href) {
+                if (!link.href.includes('#') && !link.target) {
+                    console.log('🔗 Link clicked:', link.href);
+                    window.allowNavigation = true;
+                }
+            }
+        });
+
+        console.log('✅ Page refresh protection enabled');
+
+        // ========================================================================
+        // FIREBASE & APP INITIALIZATION
+        // ========================================================================
+
         const firebaseConfig = {
             apiKey: "AIzaSyCQ7B-0Hg1SRRaclGxmaDisnld1nFtMuG4",
             authDomain: "maistro-e93eb.firebaseapp.com",
             projectId: "maistro-e93eb",
             storageBucket: "maistro-e93eb.firebasestorage.app",
             messagingSenderId: "809190380385",
-            appId: "1:809190380385:web:8d545d7595b9eef5076b20",
-            measurementId: "G-9FE2X87ER5"
+            appId: "1:809190380385:web:8d545d7595b9eef5076b20"
         };
 
-        // Backend API URL
-        const API_URL = 'http://localhost:8000';  // Change in production
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-        const authContainer = document.getElementById('auth-container');
-        const welcomeMessage = document.getElementById('welcome-message');
-        const inputTrayContainer = document.getElementById('input-tray-container');
-        const resultsSection = document.getElementById('results-section');
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const API_URL = 'http://127.0.0.1:8000';
         
         let currentUser = null;
-        let attachedFiles = new Map();
-        let uploadedFileIds = new Map();
-        let activeJobs = new Set();
+        let promptHistory = [];
+        let isProcessing = false;
 
-        const signInWithGoogle = () => { signInWithPopup(auth, provider).catch((error) => console.error("Auth Error", error)); };
-        const handleSignOut = () => { signOut(auth).catch((error) => console.error("Sign Out Error", error)); };
-        
-        onAuthStateChanged(auth, (user) => {
+        // DOM elements
+        const authSection = document.getElementById('auth-section');
+        const welcomeMsg = document.getElementById('welcome-message');
+        const inputContainer = document.getElementById('input-tray-container');
+        const outputContainer = document.getElementById('output-container');
+        const historyList = document.getElementById('history-list');
+        const logoText = document.getElementById('logo-text');
+
+        console.log('🔥 Firebase initialized');
+
+        // ========================================================================
+        // AUTH STATE
+        // ========================================================================
+
+        auth.onAuthStateChanged((user) => {
+            console.log('🔐 Auth state:', user ? `✅ ${user.email}` : '❌ Not logged in');
+            
             if (user) {
                 currentUser = user;
-                authContainer.innerHTML = `<span style="font-weight: 600;">${user.displayName}</span><button id="logout-btn" class="logout-btn">Logout</button>`;
-                document.getElementById('logout-btn').addEventListener('click', handleSignOut);
-                welcomeMessage.textContent = `Welcome, ${user.displayName}!`;
+                logoText.style.display = 'inline';
+                
+                authSection.innerHTML = `
+                    <div class="user-info">
+                        <span>${user.displayName || user.email}</span>
+                        <a href="profile.html" class="profile-icon-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                `;
+                
+                welcomeMsg.textContent = `Welcome, ${user.displayName || user.email.split('@')[0]}!`;
                 renderInputTray();
-                loadUserJobs();
+                loadHistory();
             } else {
                 currentUser = null;
-                authContainer.innerHTML = `<button id="login-btn" class="login-btn">Login</button><button id="signup-btn" class="signup-btn">Sign Up</button>`;
-                document.getElementById('login-btn').addEventListener('click', signInWithGoogle);
-                document.getElementById('signup-btn').addEventListener('click', signInWithGoogle);
-                welcomeMessage.textContent = "Automate Medical AI with Simple Language";
-                renderLoginPrompt();
-                resultsSection.style.display = 'none';
+                logoText.style.display = 'none';
+                
+                authSection.innerHTML = `
+                    <a href="login.html" style="background: var(--primary-color); color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                            <polyline points="10 17 15 12 10 7"></polyline>
+                            <line x1="15" y1="12" x2="3" y2="12"></line>
+                        </svg>
+                        Login
+                    </a>
+                `;
+                
+                welcomeMsg.textContent = "Automate Medical AI with Simple Language";
+                showLoginPrompt();
             }
         });
 
-        const renderLoginPrompt = () => {
-            inputTrayContainer.innerHTML = `<div class="login-prompt-box"><p>Please sign in to use the mAIstro prompt tray and start your first workflow.</p><button id="login-cta-btn" class="login-cta-btn">Login with Google</button></div>`;
-            document.getElementById('login-cta-btn').addEventListener('click', signInWithGoogle);
-        };
+        // ========================================================================
+        // UI RENDERING
+        // ========================================================================
 
-        const renderInputTray = () => {
-            inputTrayContainer.innerHTML = `
+        function showLoginPrompt() {
+            inputContainer.innerHTML = `
+                <div class="login-prompt-box">
+                    <p>Please sign in to use mAIgnify.</p>
+                    <a href="login.html" class="login-cta-btn">Login to Get Started</a>
+                    
+                    <div style="margin-top: 30px; padding: 20px; background: #111827; border-radius: 8px; border-left: 3px solid #3B82F6;">
+                        <h4 style="color: #3B82F6; margin-bottom: 15px;">💡 What You Can Do:</h4>
+                        <ul style="color: #9CA3AF; line-height: 2; margin: 0; padding-left: 20px;">
+                            <li>📸 Upload medical images (X-ray, CT, MRI)</li>
+                            <li>📊 Analyze health data (CSV files)</li>
+                            <li>🧠 Get AI-powered diagnoses (< 2 seconds!)</li>
+                            <li>📈 Track tumor volumes</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            outputContainer.innerHTML = '';
+        }
+
+        function renderInputTray() {
+            console.log('🎨 Rendering input tray');
+            inputContainer.innerHTML = `
                 <div id="file-list" class="file-list"></div>
                 <div class="prompt-tray">
-                    <textarea id="user-prompt" placeholder="Enter your prompt here, attach files, and send..." rows="1"></textarea>
-                    <input type="file" id="file-input" multiple>
+                    <button id="new-chat-btn" type="button" title="New chat" style="background: none; border: none; cursor: pointer; padding: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                    <textarea id="user-prompt" placeholder="Upload a medical file and describe..." rows="1"></textarea>
+                    <input type="file" id="file-input" accept="image/*,.csv,.xlsx,.nii,.nii.gz" style="display: none;">
                     <div class="tray-actions">
-                        <button id="attach-file-btn" title="Attach files">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                        <button id="history-btn" type="button" title="History">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2">
+                                <path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
                             </svg>
                         </button>
-                        <button id="send-prompt-btn" title="Send prompt">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        <button id="attach-btn" type="button" title="Attach">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2">
+                                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+                            </svg>
+                        </button>
+                        <button id="send-btn" type="button" title="Send">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"/>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
                             </svg>
                         </button>
                     </div>
                 </div>
-                <div class="examples-section">
-                    <h3 style="margin-bottom: 15px;">Example Prompts</h3>
-                    <div id="examples-container"></div>
-                </div>
             `;
-            setupInputTrayListeners();
-            loadExamples();
-        };
-
-        async function loadExamples() {
-            try {
-                const response = await fetch(`${API_URL}/api/examples`);
-                const data = await response.json();
-                const container = document.getElementById('examples-container');
-                
-                data.examples.forEach(example => {
-                    const div = document.createElement('div');
-                    div.className = 'example-item';
-                    div.innerHTML = `
-                        <div class="example-title">${example.title}</div>
-                        <div class="example-prompt">${example.prompt}</div>
-                    `;
-                    div.addEventListener('click', () => {
-                        document.getElementById('user-prompt').value = example.prompt;
-                    });
-                    container.appendChild(div);
-                });
-            } catch (error) {
-                console.error('Error loading examples:', error);
-            }
+            
+            setTimeout(setupListeners, 100);
         }
 
-        function setupInputTrayListeners() {
-            const userPrompt = document.getElementById('user-prompt');
+        // ========================================================================
+        // EVENT LISTENERS
+        // ========================================================================
+
+        function setupListeners() {
+            console.log('🔌 Setting up event listeners');
+            
+            const prompt = document.getElementById('user-prompt');
             const fileInput = document.getElementById('file-input');
-            const attachFileBtn = document.getElementById('attach-file-btn');
-            const sendPromptBtn = document.getElementById('send-prompt-btn');
+            const attachBtn = document.getElementById('attach-btn');
+            const sendBtn = document.getElementById('send-btn');
             const fileList = document.getElementById('file-list');
-
-            userPrompt.addEventListener('input', () => {
-                userPrompt.style.height = 'auto';
-                userPrompt.style.height = `${userPrompt.scrollHeight}px`;
-            });
-
-            attachFileBtn.addEventListener('click', () => fileInput.click());
-
-            fileInput.addEventListener('change', async (event) => {
-                for (const file of event.target.files) {
-                    if (!attachedFiles.has(file.name)) {
-                        attachedFiles.set(file.name, file);
-                        await uploadFile(file);
-                        displayFile(file);
-                    }
-                }
-                fileInput.value = '';
-            });
-
-            function displayFile(file) {
-                const pill = document.createElement('div');
-                pill.className = 'file-pill';
-                pill.textContent = file.name;
-                const removeBtn = document.createElement('span');
-                removeBtn.className = 'remove-file';
-                removeBtn.innerHTML = '&times;';
-                removeBtn.addEventListener('click', () => {
-                    attachedFiles.delete(file.name);
-                    uploadedFileIds.delete(file.name);
-                    pill.remove();
-                });
-                pill.appendChild(removeBtn);
-                fileList.appendChild(pill);
-            }
-
-            sendPromptBtn.addEventListener('click', handleSubmitPrompt);
-        }
-
-        async function uploadFile(file) {
-            try {
-                const formData = new FormData();
-                formData.append('file', file);
-
-                const response = await fetch(`${API_URL}/api/upload`, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await response.json();
-                uploadedFileIds.set(file.name, data.file_id);
-                console.log('File uploaded:', data);
-            } catch (error) {
-                console.error('Upload error:', error);
-                alert('Failed to upload file: ' + file.name);
-            }
-        }
-
-        async function handleSubmitPrompt() {
-            const userPrompt = document.getElementById('user-prompt');
-            const promptText = userPrompt.value.trim();
-            const fileList = document.getElementById('file-list');
-
-            if (promptText === '' && attachedFiles.size === 0) {
-                alert('Please enter a prompt or attach a file.');
+            const newChatBtn = document.getElementById('new-chat-btn');
+            const historyBtn = document.getElementById('history-btn');
+            
+            if (!sendBtn) {
+                console.error('❌ Send button not found!');
                 return;
             }
-
-            // Get file IDs
-            const fileIds = Array.from(uploadedFileIds.values());
-
-            try {
-                // Submit to backend
-                const response = await fetch(`${API_URL}/api/submit`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        prompt: promptText,
-                        user_id: currentUser.uid,
-                        file_ids: fileIds
-                    })
-                });
-
-                const data = await response.json();
-                console.log('Job submitted:', data);
-
-                // Clear input
-                userPrompt.value = '';
-                userPrompt.style.height = 'auto';
-                fileList.innerHTML = '';
-                attachedFiles.clear();
-                uploadedFileIds.clear();
-
-                // Add to active jobs
-                activeJobs.add(data.job_id);
-
-                // Show results section
-                resultsSection.style.display = 'block';
-                
-                // Start polling for status
-                pollJobStatus(data.job_id);
-
-                alert('Job submitted successfully! Check results below.');
-            } catch (error) {
-                console.error('Submit error:', error);
-                alert('Failed to submit job. Please try again.');
-            }
-        }
-
-        async function pollJobStatus(jobId) {
-            const interval = setInterval(async () => {
-                try {
-                    const response = await fetch(`${API_URL}/api/jobs/${jobId}`);
-                    const job = await response.json();
-
-                    updateJobCard(job);
-
-                    if (job.status === 'completed' || job.status === 'failed') {
-                        clearInterval(interval);
-                        activeJobs.delete(jobId);
-                    }
-                } catch (error) {
-                    console.error('Polling error:', error);
-                    clearInterval(interval);
-                }
-            }, 3000); // Poll every 3 seconds
-        }
-
-        function updateJobCard(job) {
-            let card = document.getElementById(`job-${job.job_id}`);
             
-            if (!card) {
-                card = document.createElement('div');
-                card.id = `job-${job.job_id}`;
-                card.className = 'job-card';
-                resultsSection.insertBefore(card, resultsSection.firstChild);
+            let attachedFile = null;
+
+            newChatBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🆕 New chat clicked');
+                if (confirm('Start new chat?')) {
+                    // 🔥 CRITICAL: Clear output container completely
+                    outputContainer.innerHTML = '';
+                    prompt.value = '';
+                    fileList.innerHTML = '';
+                    attachedFile = null;
+                    fileInput.value = '';
+                    console.log('✅ Everything cleared for new chat');
+                }
+                return false;
+            });
+
+            historyBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('📜 History clicked');
+                document.body.classList.toggle('history-open');
+                return false;
+            });
+
+            document.getElementById('close-history-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                document.body.classList.toggle('history-open');
+                return false;
+            });
+
+            document.getElementById('history-overlay').addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                document.body.classList.toggle('history-open');
+                return false;
+            });
+
+            prompt.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+
+            attachBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('📎 Attach clicked');
+                fileInput.click();
+                return false;
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    attachedFile = file;
+                    fileList.innerHTML = `
+                        <div class="file-pill">
+                            ${file.name} (${(file.size / 1024).toFixed(1)} KB)
+                            <span class="remove-file" style="cursor: pointer; margin-left: 10px; color: #ef4444;" onclick="event.preventDefault(); document.getElementById('file-list').innerHTML=''; document.getElementById('file-input').value=''; console.log('🗑️ File removed');">&times;</span>
+                        </div>
+                    `;
+                    console.log('📁 File attached:', file.name);
+                }
+            });
+
+            // ========================================================================
+            // 🔥 FIXED SEND BUTTON - CLEARS PREVIOUS RESULTS
+            // ========================================================================
+            
+            sendBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                console.log('');
+                console.log('='.repeat(60));
+                console.log('🚀 SEND BUTTON CLICKED');
+                console.log('='.repeat(60));
+                
+                if (isProcessing) {
+                    console.log('⏸️ Already processing, ignoring click');
+                    return false;
+                }
+                
+                if (!attachedFile) {
+                    console.log('❌ No file attached');
+                    alert('Please upload a file first!');
+                    return false;
+                }
+
+                const text = prompt.value.trim() || 'Analyze this file';
+                const file = attachedFile;
+                
+                console.log('📝 Prompt:', text);
+                console.log('📁 File:', file.name, '(' + (file.size / 1024).toFixed(1) + ' KB)');
+                
+                // Lock processing
+                isProcessing = true;
+                sendBtn.disabled = true;
+                sendBtn.style.opacity = '0.5';
+                console.log('🔒 Processing locked');
+
+                // 🔥 CRITICAL FIX: Only clear if this is a new analysis (not continuing conversation)
+                // Keep previous messages in conversation, but we'll replace loading message
+                
+                // Show user message
+                console.log('💬 Displaying user message');
+                displayUserMessage(text, file.name);
+                
+                // Show loading
+                console.log('⏳ Displaying loading message');
+                const loadingId = displayLoadingMessage();
+                
+                // Clear inputs (not output!)
+                prompt.value = '';
+                prompt.style.height = 'auto';
+                fileList.innerHTML = '';
+                attachedFile = null;
+                fileInput.value = '';
+                console.log('🧹 Inputs cleared');
+
+                try {
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    console.log('📤 Sending to:', API_URL + '/predict');
+                    
+                    const startTime = Date.now();
+                    const response = await fetch(`${API_URL}/predict`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const elapsed = Date.now() - startTime;
+                    console.log(`⏱️ Response received in ${elapsed}ms`);
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('❌ Backend error:', response.status, errorText);
+                        throw new Error(`Backend error: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('✅ Got data:', {
+                        classification: data.classification,
+                        confidence: data.confidence,
+                        risk_level: data.risk_level,
+                        image_type: data.image_type,
+                        data_type: data.data_type,
+                        method: data.method
+                    });
+                    
+                    console.log('📝 Formatting report');
+                    const report = formatReport(data);
+                    
+                    console.log('🤖 Displaying AI response');
+                    // 🔥 CRITICAL: Replace loading message with actual results
+                    displayAiMessage(loadingId, report);
+                    
+                    console.log('💾 Adding to history');
+                    addToHistory(text, file.name, report);
+                    
+                    console.log('✅ ANALYSIS COMPLETE AND DISPLAYED!');
+                    console.log('='.repeat(60));
+                    
+                } catch (error) {
+                    console.error('❌ ERROR:', error.message);
+                    console.error('❌ Stack:', error.stack);
+                    
+                    displayAiMessage(loadingId, 
+                        `<div style="color: #EF4444; padding: 20px; background: #1F2937; border-radius: 8px;">
+                            <h3>❌ Error</h3>
+                            <p><strong>Error:</strong> ${error.message}</p>
+                            <div style="margin-top: 15px; padding: 15px; background: #111827; border-radius: 8px;">
+                                <p><strong>Troubleshooting:</strong></p>
+                                <ul style="margin: 10px 0; padding-left: 20px;">
+                                    <li>Make sure backend is running: <code>python main.py</code></li>
+                                    <li>Check backend URL: <code>${API_URL}</code></li>
+                                    <li>Check browser console (F12) for errors</li>
+                                    <li>Verify backend terminal shows: "✅ Done in X.XXs"</li>
+                                </ul>
+                            </div>
+                        </div>`
+                    );
+                } finally {
+                    isProcessing = false;
+                    sendBtn.disabled = false;
+                    sendBtn.style.opacity = '1';
+                    console.log('🔓 Processing unlocked, button re-enabled');
+                }
+                
+                return false;
+            });
+
+            prompt.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (attachedFile && !isProcessing) {
+                        console.log('⌨️ Enter pressed, triggering send');
+                        sendBtn.click();
+                    }
+                    return false;
+                }
+            });
+            
+            console.log('✅ All event listeners set up');
+        }
+
+        // ========================================================================
+        // 🔥 FIXED DISPLAY FUNCTIONS - PROPER RESULT FORMATTING
+        // ========================================================================
+
+        function formatReport(data) {
+            console.log('🎨 Formatting report for:', data.classification);
+            
+            if (data.error || data.status === 'failed') {
+                return `<div style="color: #EF4444; background: #1F2937; padding: 20px; border-radius: 8px;">
+                    <h3>❌ Error</h3>
+                    <p>${data.error || 'Analysis failed'}</p>
+                </div>`;
             }
 
-            const statusClass = `status-${job.status}`;
-            const statusText = job.status.charAt(0).toUpperCase() + job.status.slice(1);
-
-            let content = `
-                <div class="job-header">
-                    <div>
-                        <strong>Job ${job.job_id.substring(0, 8)}</strong>
-                        <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
-                            ${new Date(job.created_at).toLocaleString()}
+            const color = data.risk_level === 'HIGH' ? '#EF4444' : 
+                          data.risk_level === 'MODERATE' ? '#F59E0B' : '#10B981';
+            
+            // 🔥 Build fresh HTML for THIS specific analysis
+            return `
+                <div style="background: #1F2937; padding: 25px; border-radius: 12px; border-left: 4px solid ${color};">
+                    <h3 style="color: #3B82F6; margin-bottom: 20px; font-size: 1.5rem;">📋 MEDICAL ANALYSIS REPORT</h3>
+                    
+                    ${data.image_type ? `
+                    <div style="background: #111827; padding: 12px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid #3B82F6;">
+                        <p style="margin: 0; color: #3B82F6; font-weight: 600;">
+                            🔍 ${data.image_type} DETECTED
+                        </p>
+                    </div>` : ''}
+                    
+                    ${data.data_type ? `
+                    <div style="background: #111827; padding: 12px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid #10B981;">
+                        <p style="margin: 0; color: #10B981; font-weight: 600;">
+                            📊 ${data.data_type}
+                        </p>
+                    </div>` : ''}
+                    
+                    <div style="background: #111827; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <p style="margin: 8px 0;"><strong>Method:</strong> ${data.method || 'N/A'}</p>
+                        <p style="margin: 8px 0;"><strong>Classification:</strong> 
+                            <span style="color: ${color}; font-weight: 700; font-size: 1.3rem;">${data.classification}</span>
+                        </p>
+                        ${data.diagnosis ? `
+                        <p style="margin: 8px 0;"><strong>Diagnosis:</strong> ${data.diagnosis}</p>
+                        ` : ''}
+                        <p style="margin: 8px 0;"><strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%</p>
+                        <div style="background: #374151; height: 12px; border-radius: 6px; overflow: hidden; margin-top: 10px;">
+                            <div style="width: ${data.confidence * 100}%; height: 100%; background: ${color}; transition: width 0.5s;"></div>
                         </div>
+                        <p style="margin: 8px 0; margin-top: 12px;"><strong>Risk Level:</strong> 
+                            <span style="color: ${color}; font-weight: 700; font-size: 1.1rem;">${data.risk_level}</span>
+                        </p>
                     </div>
-                    <span class="job-status ${statusClass}">${statusText}</span>
-                </div>
-                <div style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95rem;">
-                    ${job.prompt.substring(0, 150)}${job.prompt.length > 150 ? '...' : ''}
+
+                    ${data.findings && data.findings.length > 0 ? `
+                    <div style="background: #111827; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #F9FAFB; margin-bottom: 12px; font-size: 1.1rem;">🔍 KEY FINDINGS:</h4>
+                        <ul style="margin: 0; padding-left: 20px; color: #D1D5DB; line-height: 1.8;">
+                            ${data.findings.map(f => `<li style="margin: 8px 0;">${f}</li>`).join('')}
+                        </ul>
+                    </div>` : ''}
+
+                    ${data.recommendation ? `
+                    <div style="background: #111827; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid ${color};">
+                        <h4 style="color: #F9FAFB; margin-bottom: 12px; font-size: 1.1rem;">💊 RECOMMENDATION:</h4>
+                        <p style="margin: 0; color: #F9FAFB; font-size: 1.05rem; line-height: 1.6;">${data.recommendation}</p>
+                        ${data.specialty_recommended ? `
+                        <p style="margin: 10px 0 0 0; color: #9CA3AF;">
+                            <strong>Specialty:</strong> ${data.specialty_recommended}
+                        </p>` : ''}
+                    </div>` : ''}
+
+                    ${data.volume_analysis && !data.volume_analysis.error ? `
+                    <div style="background: #111827; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid #3B82F6;">
+                        <h4 style="color: #3B82F6; margin-bottom: 12px; font-size: 1.1rem;">📊 VOLUME ANALYSIS:</h4>
+                        <p style="margin: 8px 0;"><strong>Method:</strong> ${data.volume_analysis.method}</p>
+                        <p style="margin: 8px 0;"><strong>Volume:</strong> 
+                            <span style="color: #3B82F6; font-weight: 700; font-size: 1.2rem;">
+                                ${data.volume_analysis.total_volume_cm3.toFixed(2)} cm³
+                            </span>
+                        </p>
+                        ${data.volume_analysis.diameter_mm ? `
+                        <p style="margin: 8px 0;"><strong>Diameter:</strong> ${data.volume_analysis.diameter_mm.toFixed(1)} mm</p>` : ''}
+                        ${data.volume_analysis.coverage_percent ? `
+                        <p style="margin: 8px 0;"><strong>Coverage:</strong> ${data.volume_analysis.coverage_percent.toFixed(1)}%</p>` : ''}
+                    </div>` : ''}
+
+                    <div style="margin-top: 20px; padding: 15px; background: #111827; border-radius: 8px; border-left: 3px solid #F59E0B;">
+                        <p style="margin: 0; font-size: 0.85rem; color: #9CA3AF;">
+                            <strong style="color: #F59E0B;">⚠️ Disclaimer:</strong> 
+                            AI-assisted analysis. Consult healthcare professionals.
+                        </p>
+                    </div>
                 </div>
             `;
+        }
 
-            if (job.status === 'running' || job.status === 'queued') {
-                content += `
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${job.progress}%"></div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.85rem;">
-                        <span class="loading-spinner"></span>
-                        Processing... ${job.progress}%
-                    </div>
-                `;
-            }
-
-            if (job.status === 'completed' && job.result) {
-                content += `
-                    <div style="background: #10B981; color: white; padding: 8px 12px; border-radius: 6px; margin: 10px 0;">
-                        ✓ Job completed successfully
-                    </div>
-                `;
-
-                if (job.result.summary) {
-                    content += `
-                        <div style="background: #374151; padding: 12px; border-radius: 6px; margin: 10px 0; font-size: 0.9rem;">
-                            ${job.result.summary}
+        function displayUserMessage(prompt, filename) {
+            outputContainer.insertAdjacentHTML('beforeend', `
+                <div class="message-card user-message">
+                    <div class="message-header">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
                         </div>
-                    `;
-                }
-
-                if (job.result.output_files && job.result.output_files.length > 0) {
-                    content += `<div class="output-files">
-                        <strong style="display: block; margin-bottom: 10px;">Output Files (${job.result.output_files.length}):</strong>
-                    `;
-                    
-                    job.result.output_files.forEach(file => {
-                        const sizeKB = (file.size / 1024).toFixed(1);
-                        content += `
-                            <div class="file-item">
-                                <div>
-                                    <div style="font-weight: 600;">${file.name}</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">${sizeKB} KB</div>
-                                </div>
-                                <a href="${API_URL}/api/results/${job.job_id}/${file.name}" 
-                                   class="download-btn" 
-                                   download="${file.name}">
-                                    Download
-                                </a>
-                            </div>
-                        `;
-                    });
-                    
-                    content += `</div>`;
-                }
-            }
-
-            if (job.status === 'failed') {
-                content += `
-                    <div style="background: #EF4444; color: white; padding: 12px; border-radius: 6px; margin: 10px 0;">
-                        ✗ Job failed: ${job.error || 'Unknown error'}
+                        <span>You</span>
                     </div>
+                    <div class="message-content">
+                        <p>${prompt}</p>
+                        <p><strong>File:</strong> ${filename}</p>
+                    </div>
+                </div>
+            `);
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        function displayLoadingMessage() {
+            const id = 'loading-' + Date.now();
+            outputContainer.insertAdjacentHTML('beforeend', `
+                <div class="message-card ai-message" id="${id}">
+                    <div class="message-header">
+                        <div class="icon"><div class="spinner"></div></div>
+                        <span>mAIgnify</span>
+                    </div>
+                    <div class="message-content"><p>Analyzing your medical file...</p></div>
+                </div>
+            `);
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            return id;
+        }
+
+        function displayAiMessage(id, html) {
+            const card = document.getElementById(id);
+            if (card) {
+                // 🔥 CRITICAL: Replace the entire loading card with fresh results
+                card.innerHTML = `
+                    <div class="message-header">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M12 8V4H8"/><rect x="4" y="12" width="16" height="8" rx="2"/>
+                                <path d="M2 12h20"/><path d="M12 12V8"/>
+                            </svg>
+                        </div>
+                        <span>mAIgnify</span>
+                    </div>
+                    <div class="message-content">${html}</div>
                 `;
-            }
-
-            card.innerHTML = content;
-        }
-
-        async function loadUserJobs() {
-            if (!currentUser) return;
-
-            try {
-                const response = await fetch(`${API_URL}/api/jobs/user/${currentUser.uid}`);
-                const data = await response.json();
-
-                if (data.jobs && data.jobs.length > 0) {
-                    resultsSection.style.display = 'block';
-                    
-                    data.jobs.forEach(job => {
-                        updateJobCard(job);
-                        
-                        // Resume polling for active jobs
-                        if (job.status === 'running' || job.status === 'queued') {
-                            activeJobs.add(job.job_id);
-                            pollJobStatus(job.job_id);
-                        }
-                    });
-                }
-            } catch (error) {
-                console.error('Error loading user jobs:', error);
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                console.log('✅ Results displayed for message ID:', id);
+            } else {
+                console.error('❌ Could not find loading message with ID:', id);
             }
         }
+
+        // ========================================================================
+        // HISTORY FUNCTIONS
+        // ========================================================================
+
+        function loadHistory() {
+            promptHistory = JSON.parse(localStorage.getItem('promptHistory') || '[]');
+            renderHistory();
+        }
+
+        function addToHistory(prompt, filename, response) {
+            promptHistory.unshift({
+                id: Date.now(),
+                prompt, filename, response,
+                timestamp: new Date().toISOString()
+            });
+            if (promptHistory.length > 50) promptHistory = promptHistory.slice(0, 50);
+            localStorage.setItem('promptHistory', JSON.stringify(promptHistory));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            historyList.innerHTML = promptHistory.length === 0 
+                ? '<div class="history-item empty">No history yet.</div>'
+                : promptHistory.map(item => `
+                    <div class="history-item" onclick='loadItem(${JSON.stringify(item).replace(/'/g, "&apos;")})'>
+                        ${item.prompt || item.filename}
+                    </div>
+                `).join('');
+        }
+
+        function loadItem(item) {
+            // 🔥 CRITICAL: Clear output before loading history item
+            outputContainer.innerHTML = '';
+            displayUserMessage(item.prompt, item.filename);
+            displayAiMessage(displayLoadingMessage(), item.response);
+            document.body.classList.remove('history-open');
+        }
+
+        window.loadItem = loadItem;
+
+        document.getElementById('clear-history-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('Clear all history?')) {
+                promptHistory = [];
+                localStorage.removeItem('promptHistory');
+                renderHistory();
+            }
+        });
+
+        console.log('✅ mAIgnify fully initialized and ready!');
+        console.log('📝 All event handlers are set up');
+        console.log('🛡️ Page refresh protection is active');
+        console.log('🔥 Result mixing prevention is active');
     </script>
 </body>
 </html>
