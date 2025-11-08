@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mAIgnify - Profile</title>
+    <link rel="icon" href="assets/maignify-logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .profile-page {
+            min-height: calc(100vh - 160px);
+            padding: 60px 0;
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .profile-avatar-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem auto;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            border: 4px solid var(--border-color);
+        }
+        
+        .profile-section {
+            max-width: 800px;
+            margin: 0 auto 2rem auto;
+            background: var(--bg-white);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .profile-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .profile-info-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .profile-info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+        
+        .profile-info-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .profile-info-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .toggle-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #374151;
+            transition: 0.4s;
+            border-radius: 30px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+        
+        .signout-btn {
+            width: 100%;
+            padding: 14px;
+            background: #EF4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .signout-btn:hover {
+            background: #DC2626;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--bg-white);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="container navbar">
+            <a href="index.html" class="logo">
+                <img src="assets/maignify-logo.png" alt="mAIgnify Logo">
+                <span id="logo-text">mAIgnify</span>
+            </a>
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="agents.html">Agents</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+                <div id="auth-container" class="auth-links"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="profile-page">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar-large" id="profile-avatar">U</div>
+                <h1 id="user-name">User Name</h1>
+                <p id="user-email" style="color: var(--text-secondary); font-size: 1.1rem;">user@example.com</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="uploads-count">0</div>
+                    <div class="stat-label">Pictures Uploaded</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="prompts-count">0</div>
+                    <div class="stat-label">Prompts Submitted</div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3>User Details</h3>
+                <div class="profile-info-grid">
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Name
+                        </span>
+                        <span class="profile-info-value" id="info-name">User Name</span>
+                    </div>
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            Email
+                        </span>
+                        <span class="profile-info-value" id="info-email">user@example.com</span>
+                    </div>
+                    <div class="profile-info-item">
+                        <span class="profile-info-label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                                <polyline points="17 11 19 13 23 9"></polyline>
+                            </svg>
+                            Auth Provider
+                        </span>
+                        <span class="profile-info-value" id="info-provider">Email</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3>Settings</h3>
+                <div class="toggle-container">
+                    <span class="toggle-label">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px;">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                        Dark Theme
+                    </span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="dark-theme-toggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <button class="signout-btn" id="signout-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container"><p>&copy; 2025 mAIgnify Project.</p></div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQ7B-0Hg1SRRaclGxmaDisnld1nFtMuG4",
+            authDomain: "maistro-e93eb.firebaseapp.com",
+            projectId: "maistro-e93eb",
+            storageBucket: "maistro-e93eb.appspot.com",
+            messagingSenderId: "809190380385",
+            appId: "1:809190380385:web:8d545d7595b9eef5076b20",
+            measurementId: "G-9FE2X87ER5"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const authContainer = document.getElementById('auth-container');
+        const logoText = document.getElementById('logo-text');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                if (logoText) logoText.style.display = 'inline';
+                // FIXED: Standardized auth logic
+                authContainer.innerHTML = `
+                    <span style="font-weight: 600; color: var(--text-primary); margin-right: 10px;">${user.displayName || user.email}</span>
+                    <a href="profile.html" class="profile-icon-btn active-profile" title="Profile" style="text-decoration: none; border-color: var(--primary-color);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                `;
+                
+                // Load user data
+                const userName = user.displayName || 'User';
+                const userEmail = user.email;
+                const authProvider = user.providerData[0]?.providerId || 'email';
+                
+                document.getElementById('user-name').textContent = userName;
+                document.getElementById('user-email').textContent = userEmail;
+                document.getElementById('info-name').textContent = userName;
+                document.getElementById('info-email').textContent = userEmail;
+                document.getElementById('info-provider').textContent = authProvider.includes('google') ? 'Google' : 'Email';
+                
+                // Set avatar
+                const avatar = document.getElementById('profile-avatar');
+                avatar.textContent = userName.charAt(0).toUpperCase();
+                
+                // Load uploads count from localStorage
+                const promptHistory = JSON.parse(localStorage.getItem('promptHistory') || '[]');
+                let totalFiles = 0;
+                promptHistory.forEach(item => {
+                    if (item.user && item.user.files) {
+                        totalFiles += item.user.files.length;
+                    }
+                });
+                document.getElementById('uploads-count').textContent = totalFiles;
+                document.getElementById('prompts-count').textContent = promptHistory.length;
+                
+                // Dark theme toggle
+                const darkThemeToggle = document.getElementById('dark-theme-toggle');
+                const savedTheme = localStorage.getItem('darkTheme');
+                if (savedTheme !== null) {
+                    darkThemeToggle.checked = savedTheme === 'true';
+                }
+                
+                darkThemeToggle.addEventListener('change', () => {
+                    localStorage.setItem('darkTheme', darkThemeToggle.checked);
+                    // In a real app, you would apply the theme here
+                    alert(darkThemeToggle.checked ? 'Dark theme enabled' : 'Light theme enabled');
+                });
+                
+                // Sign out
+                document.getElementById('signout-btn').addEventListener('click', () => {
+                    if (confirm('Are you sure you want to sign out?')) {
+                        signOut(auth).then(() => {
+                            window.location.href = 'index.html';
+                        }).catch((error) => {
+                            console.error('Sign Out Error', error);
+                        });
+                    }
+                });
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>

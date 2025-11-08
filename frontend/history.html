@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mAIstro - Chat History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">mAIstro</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="agents.html">Agents</a>
+            <a href="about.html">About</a>
+            <a href="history.html" class="active">History</a>
+            <a href="account.html">Account</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>📜 Chat History</h1>
+            <p>View all your previous conversations</p>
+        </div>
+
+        <div id="historyContainer" class="history-container">
+            <div class="loading">Loading history...</div>
+        </div>
+    </main>
+
+    <script>
+        const API_BASE = 'http://127.0.0.1:8000';
+
+        // Check auth
+        const user = JSON.parse(localStorage.getItem('maistro_user'));
+        if (!user) {
+            window.location.href = 'login.html';
+        }
+
+        // Load history
+        async function loadHistory() {
+            try {
+                const response = await fetch(`${API_BASE}/api/history/${user.email}`);
+                const data = await response.json();
+                
+                const container = document.getElementById('historyContainer');
+                
+                if (data.history.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div style="font-size: 64px; margin-bottom: 16px;">📭</div>
+                            <h3>No chat history yet</h3>
+                            <p>Start a conversation on the home page!</p>
+                            <a href="index.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: var(--primary); color: white; text-decoration: none; border-radius: 8px;">Go to Home</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = data.history.map(chat => `
+                    <div class="history-card" onclick="viewChat('${chat.job_id}')">
+                        <div class="history-header">
+                            <span class="history-agent">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5z"></path>
+                                </svg>
+                                ${chat.agent}
+                            </span>
+                            <span class="history-time">${formatTime(chat.timestamp)}</span>
+                        </div>
+                        <div class="history-prompt">
+                            <strong>Q:</strong> ${chat.message}
+                        </div>
+                        <div class="history-response">
+                            <strong>A:</strong> ${chat.response}
+                        </div>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                document.getElementById('historyContainer').innerHTML = `
+                    <div class="error-state">
+                        <h3>Failed to load history</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diff = now - date;
+            
+            if (diff < 60000) return 'Just now';
+            if (diff < 3600000) return `${Math.floor(diff / 60000)} minutes ago`;
+            if (diff < 86400000) return `${Math.floor(diff / 3600000)} hours ago`;
+            return date.toLocaleDateString();
+        }
+
+        function viewChat(jobId) {
+            // Navigate to home and load this chat
+            window.location.href = `index.html?job=${jobId}`;
+        }
+
+        // Load on page load
+        loadHistory();
+    </script>
+
+    <style>
+        .history-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .history-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .history-card:hover {
+            border-color: var(--primary);
+            transform: translateX(8px);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .history-agent {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .history-time {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .history-prompt {
+            margin-bottom: 12px;
+            padding: 12px;
+            background: var(--bg-hover);
+            border-radius: 8px;
+        }
+
+        .history-response {
+            padding: 12px;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            color: var(--text-secondary);
+        }
+
+        .loading, .empty-state, .error-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h3 {
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+    </style>
+</body>
+</html>

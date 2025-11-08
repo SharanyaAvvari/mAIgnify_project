@@ -1,0 +1,15 @@
+{
+  "classification": "SUSPICIOUS",
+  "confidence": 0.4855586290359497,
+  "risk_level": "MODERATE",
+  "findings": [
+    "Suspicious features detected",
+    "Further investigation needed"
+  ],
+  "recommendation": "\u26a0\ufe0f Follow-up imaging in 1-2 weeks.",
+  "method": "CNN Deep Learning (Cancer Model)",
+  "raw_prediction": 0.4855586290359497,
+  "disease_type": "cancer",
+  "filename": "example2.jpg",
+  "timestamp": "2025-11-05T22:49:53.353177"
+}

@@ -1,0 +1,15 @@
+{
+  "classification": "BENIGN",
+  "confidence": 0.6969218850135803,
+  "risk_level": "LOW",
+  "findings": [
+    "Benign features",
+    "Regular tissue patterns"
+  ],
+  "recommendation": "\u2705 Continue routine monitoring.",
+  "method": "CNN Deep Learning (Cancer Model)",
+  "raw_prediction": 0.3030781149864197,
+  "disease_type": "cancer",
+  "filename": "example 1.jpg",
+  "timestamp": "2025-11-05T22:49:30.667850"
+}

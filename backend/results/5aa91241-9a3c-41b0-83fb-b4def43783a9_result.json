@@ -1,0 +1,16 @@
+{
+  "classification": "MALIGNANT",
+  "confidence": 0.8859395980834961,
+  "risk_level": "HIGH",
+  "findings": [
+    "Malignant features detected",
+    "Irregular cellular patterns",
+    "Abnormal tissue architecture"
+  ],
+  "recommendation": "\u26a0\ufe0f URGENT: Oncology consultation and biopsy recommended.",
+  "method": "CNN Deep Learning (Cancer Model)",
+  "raw_prediction": 0.8859395980834961,
+  "disease_type": "cancer",
+  "filename": "example3.jpg",
+  "timestamp": "2025-11-05T22:57:17.744468"
+}

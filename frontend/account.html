@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mAIstro - Account</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">mAIstro</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="agents.html">Agents</a>
+            <a href="about.html">About</a>
+            <a href="account.html" class="active">Account</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Account</h1>
+            <p>Your profile and usage statistics</p>
+        </div>
+
+        <!-- User Info Section -->
+        <div class="account-section">
+            <h2>Profile Information</h2>
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <div class="avatar-circle" id="avatarContainer">
+                        <span id="avatarInitial">U</span>
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <h3 id="userName">User Name</h3>
+                    <p id="userEmail">user@example.com</p>
+                    <p class="login-time">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Logged in: <span id="loginTime">Just now</span>
+                    </p>
+                    <p class="login-provider">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Provider: <span id="loginProvider">Email</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Analytics Section -->
+        <div class="account-section">
+            <h2>📊 Usage Analytics</h2>
+            <div class="analytics-grid">
+                <div class="analytics-card purple">
+                    <div class="analytics-number" id="jobsCount">0</div>
+                    <div class="analytics-label">Jobs Submitted</div>
+                    <div class="analytics-subtitle">Total processed</div>
+                </div>
+
+                <div class="analytics-card blue">
+                    <div class="analytics-number" id="filesCount">0</div>
+                    <div class="analytics-label">Files Uploaded</div>
+                    <div class="analytics-subtitle">Total files</div>
+                </div>
+
+                <div class="analytics-card green">
+                    <div class="analytics-number" id="hoursSaved">0</div>
+                    <div class="analytics-label">Hours Saved</div>
+                    <div class="analytics-subtitle">Estimated time</div>
+                </div>
+
+                <div class="analytics-card cyan">
+                    <div class="analytics-number" id="activeChats">1</div>
+                    <div class="analytics-label">Active Sessions</div>
+                    <div class="analytics-subtitle">Current session</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preferences Section -->
+        <div class="account-section">
+            <h2>⚙️ Preferences</h2>
+            <div class="preferences-grid">
+                <div class="preference-item">
+                    <div>
+                        <h4>Dark Mode</h4>
+                        <p>Use dark theme for better eye comfort</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkModeToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="preference-item">
+                    <div>
+                        <h4>Email Notifications</h4>
+                        <p>Receive updates about job completion</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="emailNotifToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign Out Button -->
+        <div class="account-section">
+            <button class="btn-signout" onclick="signOut()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Sign Out
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Check authentication
+        const user = JSON.parse(localStorage.getItem('maistro_user'));
+        if (!user) {
+            window.location.href = 'login.html';
+        }
+
+        // Load user data
+        if (user) {
+            document.getElementById('userName').textContent = user.name || 'User';
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('loginProvider').textContent = user.provider.charAt(0).toUpperCase() + user.provider.slice(1);
+            
+            // Set avatar
+            const avatarContainer = document.getElementById('avatarContainer');
+            const avatarInitial = document.getElementById('avatarInitial');
+            
+            if (user.picture) {
+                // If user has a profile picture (from Google/Apple)
+                avatarContainer.style.backgroundImage = `url(${user.picture})`;
+                avatarContainer.style.backgroundSize = 'cover';
+                avatarContainer.style.backgroundPosition = 'center';
+                avatarInitial.style.display = 'none';
+            } else {
+                // Show initial
+                avatarInitial.textContent = user.name.charAt(0).toUpperCase();
+            }
+            
+            // Calculate

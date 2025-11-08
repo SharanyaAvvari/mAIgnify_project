@@ -1,0 +1,9 @@
+=== IMAGE CLASSIFICATION REPORT ===
+
+Classification: NORMAL
+Confidence: 87.72%
+
+Findings:
+• Regular borders
+• Homogeneous density
+• No suspicious features

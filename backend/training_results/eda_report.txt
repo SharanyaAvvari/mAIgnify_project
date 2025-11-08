@@ -1,0 +1,20 @@
+======================================================================
+EXPLORATORY DATA ANALYSIS REPORT
+======================================================================
+
+Generated: 2025-11-01T22:49:08.040309
+
+
+TRAIN DATASET:
+  Total Images: 82297
+  Classes: 2
+  Distribution:
+    - benign: 22141 (26.9%)
+    - malignant: 60156 (73.1%)
+
+VALIDATION DATASET:
+  Total Images: 39904
+  Classes: 2
+  Distribution:
+    - benign: 8603 (21.6%)
+    - malignant: 31301 (78.4%)

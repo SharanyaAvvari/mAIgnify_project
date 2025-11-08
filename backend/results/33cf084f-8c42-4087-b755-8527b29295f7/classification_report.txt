@@ -1,0 +1,23 @@
+======================================================================
+           MEDICAL IMAGE CLASSIFICATION REPORT
+======================================================================
+
+Analysis Method: CNN Deep Learning
+Classification: MALIGNANT
+Confidence: 80.9%
+Risk Level: HIGH
+
+Raw Model Output: 0.8088
+  (0.0 = Benign, 1.0 = Malignant)
+
+======================================================================
+FINDINGS:
+======================================================================
+1. CNN model detected malignant features
+2. High probability of cancerous tissue
+3. Irregular cellular patterns identified
+4. Abnormal tissue architecture detected
+
+======================================================================
+CLINICAL RECOMMENDATION:
+======================================================================

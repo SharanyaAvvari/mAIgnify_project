@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-11-01T22:49:08.040309",
+  "datasets": {
+    "train": {
+      "classes": [
+        "benign",
+        "malignant"
+      ],
+      "class_distribution": {
+        "benign": 22141,
+        "malignant": 60156
+      },
+      "total_images": 82297
+    },
+    "validation": {
+      "classes": [
+        "benign",
+        "malignant"
+      ],
+      "class_distribution": {
+        "benign": 8603,
+        "malignant": 31301
+      },
+      "total_images": 39904
+    }
+  }
+}
