@@ -8,3 +8,16 @@ __pycache__/
 
 # Local backup folder (ignore)
 backup_local/
+
+# Environment & runtime
+.env
+backend/.env
+maistro_env/
+backend/maistro_env/
+
+# Uploaded files / generated output
+uploads/
+backend/uploads/
+
+# Build / app cache
+mAIstro/
