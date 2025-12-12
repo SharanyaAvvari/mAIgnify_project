@@ -3,7 +3,7 @@ mAIgnify Universal Medical AI - v8.0 FINAL
 ✅ Cancer scans: BENIGN/MALIGNANT classification
 ✅ Other scans: NORMAL/ABNORMAL classification
 ✅ Supports: Brain MRI/CT, X-rays, Ultrasound, Heart scans, Cancer scans
-✅ Proper disease-specific analysis
+✅ Google Drive model download support
 """
 
 from fastapi import FastAPI, File, UploadFile
@@ -51,7 +51,6 @@ app.add_middleware(
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 MODEL_DIR = os.path.join(BASE_DIR, "models")
-MODEL_PATH = os.path.join(MODEL_DIR, "best_model.h5")
 
 for directory in [UPLOAD_DIR, MODEL_DIR]:
     os.makedirs(directory, exist_ok=True)
@@ -60,22 +59,77 @@ for directory in [UPLOAD_DIR, MODEL_DIR]:
 cnn_model = None
 IMG_SIZE = 224
 
-# ==================== MODEL LOADER ====================
+# ==================== MODEL LOADER WITH GOOGLE DRIVE SUPPORT ====================
 
 def load_cnn_model():
+    """Load trained CNN model with Google Drive fallback"""
     global cnn_model
+    
     if not CNN_AVAILABLE:
+        print("⚠️ CNN unavailable - TensorFlow not installed")
         return False
-    if os.path.exists(MODEL_PATH):
+    
+    # Try multiple model file names
+    possible_paths = [
+        os.path.join(BASE_DIR, "best_model.h5"),
+        os.path.join(MODEL_DIR, "best_model.h5"),
+        os.path.join(BASE_DIR, "cancer_classifier.h5"),
+        os.path.join(MODEL_DIR, "cancer_classifier.h5")
+    ]
+    
+    model_found = False
+    model_path = None
+    for path in possible_paths:
+        if os.path.exists(path):
+            model_found = True
+            model_path = path
+            print(f"📂 Found model at: {path}")
+            break
+    
+    # Download from Google Drive if not found
+    if not model_found:
+        print("📥 Model not found locally. Downloading from Google Drive...")
+        model_path = os.path.join(BASE_DIR, "best_model.h5")
         try:
-            cnn_model = keras.models.load_model(MODEL_PATH)
-            print(f"✅ CNN model loaded: {MODEL_PATH}")
-            return True
-        except Exception as e:
-            print(f"❌ Model load error: {e}")
+            import gdown
+            # ⚠️ REPLACE 'YOUR_FILE_ID' with your actual Google Drive FILE_ID
+            file_id = "1TdAVFFXaJuoWb7nBeCBV6Pu9dnlQ2rd9"
+            
+            print(f"⬇️ Downloading model from Google Drive...")
+            gdown.download(
+                f"https://drive.google.com/uc?id={file_id}",
+                model_path,
+                quiet=False
+            )
+            print("✅ Model downloaded successfully!")
+        except ImportError:
+            print("❌ gdown not installed. Run: pip install gdown")
             return False
-    else:
-        print(f"⚠️ Model not found: {MODEL_PATH}")
+        except Exception as e:
+            print(f"❌ Download failed: {e}")
+            print(f"💡 Make sure:")
+            print(f"   1. File is shared publicly on Google Drive")
+            print(f"   2. FILE_ID is correct")
+            print(f"   3. gdown is installed: pip install gdown")
+            return False
+    
+    # Load model
+    try:
+        print(f"🔄 Loading model from: {model_path}")
+        cnn_model = keras.models.load_model(model_path, compile=False)
+        
+        # Recompile
+        cnn_model.compile(
+            optimizer='adam',
+            loss='binary_crossentropy',
+            metrics=['accuracy']
+        )
+        print(f"✅ CNN model loaded successfully!")
+        return True
+    except Exception as e:
+        print(f"❌ Error loading model: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
 # ==================== SMART IMAGE TYPE DETECTION ====================
@@ -716,22 +770,18 @@ async def predict(file: UploadFile = File(...)):
 async def startup():
     print("\n" + "="*70)
     print("🚀 mAIgnify Medical AI v8.0")
-    print("="*70)
-    load_cnn_model()
-    print("")
-    print("📋 CLASSIFICATION SYSTEM:")
-    print("   🔬 Cancer Scans    → BENIGN / MALIGNANT / SUSPICIOUS")
-    print("   🦴 X-rays          → NORMAL / ABNORMAL / SUSPICIOUS")
-    print("   🧠 Brain MRI/CT    → NORMAL / ABNORMAL / SUSPICIOUS")
-    print("   ❤️  Heart Scans     → NORMAL / ABNORMAL / SUSPICIOUS")
-    print("   📡 Ultrasound      → NORMAL / ABNORMAL / SUSPICIOUS")
-    print("   📊 CSV Data        → Risk Analysis")
-    print("")
-    print("="*70)
-    print("🌐 http://127.0.0.1:8000")
-    print("📚 Docs: http://127.0.0.1:8000/docs")
-    print("="*70 + "\n")
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+print("="*70)
+load_cnn_model()
+print("")
+print("📋 CLASSIFICATION SYSTEM:")
+print("   🔬 Cancer Scans    → BENIGN / MALIGNANT / SUSPICIOUS")
+print("   🦴 X-rays          → NORMAL / ABNORMAL / SUSPICIOUS")
+print("   🧠 Brain MRI/CT    → NORMAL / ABNORMAL / SUSPICIOUS")
+print("   ❤️  Heart Scans     → NORMAL / ABNORMAL / SUSPICIOUS")
+print("   📡 Ultrasound      → NORMAL / ABNORMAL / SUSPICIOUS")
+print("   📊 CSV Data        → Risk Analysis")
+print("")
+print("="*70)
+print("🌐 http://127.0.0.1:8000")
+print("📚 Docs: http://127.0.0.1:8000/docs")
+print("="*70 + "\n")
