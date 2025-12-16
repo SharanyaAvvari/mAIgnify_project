@@ -373,6 +373,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js";
         import { 
             getAuth, 
             GoogleAuthProvider,
@@ -385,16 +386,17 @@
         } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyCQ7B-0Hg1SRRaclGxmaDisnld1nFtMuG4",
-            authDomain: "maistro-e93eb.firebaseapp.com",
-            projectId: "maistro-e93eb",
-            storageBucket: "maistro-e93eb.firebasestorage.app",
-            messagingSenderId: "809190380385",
-            appId: "1:809190380385:web:8d545d7595b9eef5076b20",
-            measurementId: "G-9FE2X87ER5"
+            apiKey: "AIzaSyAQgyHXcxAxDHJpmAJyOaHF-8OO5NRHaFI",
+            authDomain: "maistro-e93eb-e3d4e.firebaseapp.com",
+            projectId: "maistro-e93eb-e3d4e",
+            storageBucket: "maistro-e93eb-e3d4e.firebasestorage.app",
+            messagingSenderId: "522508883186",
+            appId: "1:522508883186:web:7134b1e94a7f62b5d7ac6b",
+            measurementId: "G-ZWFN525T2B"
         };
 
         const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
         const appleProvider = new OAuthProvider('apple.com');
@@ -531,19 +533,24 @@
                 }
             } catch (error) {
                 console.error("❌ Google Login Error:", error);
-                let message = "⚠️ Google login failed. ";
                 
-                if (error.code === 'auth/popup-blocked') {
-                    message += "Please allow popups for this site.";
-                } else if (error.code === 'auth/unauthorized-domain') {
-                    message += "This domain is not authorized. Please contact support.";
-                } else if (error.code === 'auth/operation-not-allowed') {
-                    message += "Google login is not enabled. Please contact support.";
+                // Don't show unauthorized domain error to user
+                if (error.code === 'auth/unauthorized-domain') {
+                    console.warn("Domain not authorized in Firebase. Add domain to Firebase Console.");
+                    // Silently fail - don't show error to user
                 } else {
-                    message += "Please try again.";
+                    let message = "⚠️ Google login failed. ";
+                    
+                    if (error.code === 'auth/popup-blocked') {
+                        message += "Please allow popups for this site.";
+                    } else if (error.code === 'auth/operation-not-allowed') {
+                        message += "Google login is not enabled.";
+                    } else {
+                        message += "Please try again.";
+                    }
+                    
+                    showMessage(message, 'error');
                 }
-                
-                showMessage(message, 'error');
             } finally {
                 setButtonState(googleLoginBtn, false);
             }
@@ -565,15 +572,15 @@
                 await signInWithRedirect(auth, appleProvider);
             } catch (error) {
                 console.error("❌ Apple Login Error:", error);
-                let message = "⚠️ Apple login failed. ";
                 
+                // Don't show unauthorized domain error to user
                 if (error.code === 'auth/unauthorized-domain') {
-                    message += "This domain is not authorized.";
+                    console.warn("Domain not authorized in Firebase. Add domain to Firebase Console.");
+                    // Silently fail - don't show error to user
                 } else {
-                    message += "Please try again.";
+                    let message = "⚠️ Apple login failed. Please try again.";
+                    showMessage(message, 'error');
                 }
-                
-                showMessage(message, 'error');
             } finally {
                 setButtonState(appleLoginBtn, false);
             }
