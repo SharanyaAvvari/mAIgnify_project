@@ -8,46 +8,289 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <style>
-        #login-page {
-            background-image: url('assets/medical-background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        #login-page::before {
-            content: '';
-            position: absolute;
+
+        :root {
+            --primary-color: #3B82F6;
+            --bg-dark: #111827;
+            --text-light: #F9FAFB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-light);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(17, 24, 39, 0.95);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(17, 24, 39, 0.85);
-            z-index: 1;
+            z-index: 100;
+            backdrop-filter: blur(10px);
         }
-        
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        #login-page {
+            background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 1rem 2rem;
+        }
+
         .login-container {
-            position: relative;
-            z-index: 2;
+            background: rgba(17, 24, 39, 0.9);
+            padding: 3rem 2.5rem;
+            border-radius: 1rem;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
-        
+
         .login-logo {
             text-align: center;
             margin-bottom: 2rem;
         }
-        
+
         .login-logo img {
-            height: 80px;
+            height: 70px;
             margin-bottom: 1rem;
         }
-        
+
         .login-logo h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--primary-color);
-            margin-bottom: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .login-container > p {
+            text-align: center;
+            color: #9CA3AF;
+            margin-bottom: 2rem;
+        }
+
+        #login-form input {
+            width: 100%;
+            padding: 0.875rem;
+            margin-bottom: 1rem;
+            border: 1px solid #374151;
+            border-radius: 0.5rem;
+            background: #1F2937;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        #login-form input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .forgot-password-link {
+            text-align: right;
+            margin-bottom: 1.5rem;
+        }
+
+        .forgot-password-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .login-cta-btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-cta-btn:hover {
+            background: #2563EB;
+            transform: translateY(-2px);
+        }
+
+        .login-cta-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #error-message {
+            text-align: center;
+            margin-top: 1rem;
+            min-height: 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: #6B7280;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #374151;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .social-login-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-login-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #374151;
+            border-radius: 0.5rem;
+            background: #1F2937;
+            color: var(--text-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .social-login-btn:hover:not(:disabled) {
+            background: #374151;
+            transform: translateY(-2px);
+        }
+
+        .social-login-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .social-login-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .signup-link {
+            text-align: center;
+            color: #9CA3AF;
+            margin-top: 1.5rem;
+        }
+
+        .signup-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer {
+            background: var(--bg-dark);
+            padding: 2rem 0;
+            text-align: center;
+            color: #6B7280;
+        }
+
+        .profile-icon-btn {
+            padding: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .profile-icon-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .social-login-options {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -55,7 +298,7 @@
     <header class="header">
         <nav class="container navbar">
             <a href="index.html" class="logo">
-                <img src="assets/maignify-logo.png" alt="mAIgnify Logo">
+                <img src="assets/maignify-logo.png" alt="mAIgnify Logo" onerror="this.style.display='none'">
                 <span id="logo-text">mAIgnify</span>
             </a>
             <div class="nav-menu">
@@ -73,7 +316,7 @@
     <main id="login-page">
         <div class="login-container">
             <div class="login-logo">
-                <img src="assets/maignify-logo.png" alt="mAIgnify Logo">
+                <img src="assets/maignify-logo.png" alt="mAIgnify Logo" onerror="this.style.display='none'">
                 <h1>mAIgnify</h1>
             </div>
             
@@ -88,7 +331,7 @@
                 </div>
                 <button type="submit" class="login-cta-btn">Login</button>
             </form>
-            <p id="error-message" style="color: #F87171; min-height: 1.2em;"></p>
+            <p id="error-message"></p>
 
             <div class="divider">or continue with</div>
 
@@ -97,7 +340,7 @@
                     <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.222,0-9.617-3.356-11.283-7.943l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C39.999,35.533,44,29.891,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
                     Google
                 </button>
-                <button id="apple-login-btn" class="social-login-btn" title="Apple Login Not Available">
+                <button id="apple-login-btn" class="social-login-btn" title="Apple Login">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.3,12.18c0.14-1.55-1.12-2.83-1.2-2.88c-0.65-0.75-1.7-1.23-2.73-1.25c-1.42-0.12-2.73,0.76-3.43,0.76 c-0.73,0-1.7-0.74-2.88-0.69c-1.33,0.06-2.58,0.75-3.28,1.65c-1.46,1.86-1.88,4.55-1.1,6.86c0.41,1.19,1.17,2.44,2.13,3.28 c0.78,0.68,1.6,1.05,2.65,1.06c1.18,0,1.63-0.66,3.03-0.66c1.38,0,1.75,0.66,3.05,0.66c1.1,0,1.9-0.41,2.65-1.08 c0.93-0.82,1.58-1.92,1.96-3.03C21.33,15.71,21.13,13.52,19.3,12.18z M15.45,7.86c0.61-0.75,1.03-1.8,0.9-2.88 c-0.84,0.06-1.88,0.65-2.52,1.39c-0.54,0.64-1.15,1.78-0.95,2.78C13.72,9.21,14.73,8.65,15.45,7.86z"></path></svg>
                     Apple
                 </button>
@@ -112,159 +355,237 @@
     </footer>
 
     <script type="module">
-        // Disable Apple Login on non-Apple devices
-const isAppleDevice = /Mac|iPhone|iPad/i.test(navigator.userAgent);
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { 
+            getAuth, 
+            GoogleAuthProvider,
+            OAuthProvider,
+            signInWithPopup,
+            signInWithRedirect,
+            getRedirectResult,
+            signInWithEmailAndPassword, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
-if (!isAppleDevice) {
-    const appleBtn = document.getElementById('apple-login-btn');
-    if (appleBtn) {
-        appleBtn.disabled = true;
-        appleBtn.style.opacity = "0.5";
-        appleBtn.title = "Apple Login works only on Apple devices (Safari)";
-    }
-}
-import { getRedirectResult } from 
-"https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQ7B-0Hg1SRRaclGxmaDisnld1nFtMuG4",
+            authDomain: "maistro-e93eb.firebaseapp.com",
+            projectId: "maistro-e93eb",
+            storageBucket: "maistro-e93eb.firebasestorage.app",
+            messagingSenderId: "809190380385",
+            appId: "1:809190380385:web:8d545d7595b9eef5076b20",
+            measurementId: "G-9FE2X87ER5"
+        };
 
-   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-import { 
-    getAuth, 
-    GoogleAuthProvider,
-    OAuthProvider,          // 👈 ADD
-    signInWithPopup,
-    signInWithRedirect,     // 👈 ADD
-    signInWithEmailAndPassword, 
-    onAuthStateChanged 
-} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+        const appleProvider = new OAuthProvider('apple.com');
 
-    
-    const firebaseConfig = {
-        apiKey: "AIzaSyCQ7B-0Hg1SRRaclGxmaDisnld1nFtMuG4",
-        authDomain: "maistro-e93eb.firebaseapp.com",
-        projectId: "maistro-e93eb",
-        storageBucket: "maistro-e93eb.firebasestorage.app",
-        messagingSenderId: "809190380385",
-        appId: "1:809190380385:web:8d545d7595b9eef5076b20",
-        measurementId: "G-9FE2X87ER5"
-    };
+        // UI elements
+        const loginForm = document.getElementById('login-form');
+        const emailInput = document.getElementById('email-input');
+        const passwordInput = document.getElementById('password-input');
+        const errorMessage = document.getElementById('error-message');
+        const googleLoginBtn = document.getElementById('google-login-btn');
+        const appleLoginBtn = document.getElementById('apple-login-btn');
+        const logoText = document.getElementById('logo-text');
+        const authContainer = document.getElementById('auth-container');
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    // 🔥 REQUIRED for mobile redirect login
-getRedirectResult(auth)
-    .then((result) => {
-        if (result && result.user) {
-            console.log("Google/Apple login success:", result.user.email);
-            window.location.href = "index.html";
+        // Detect device type and platform
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        const isAppleDevice = /Mac|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        console.log('Device Info:', { isMobile, isIOS, isAndroid, isSafari, isAppleDevice });
+
+        // Handle Apple Login availability
+        if (!isAppleDevice) {
+            appleLoginBtn.disabled = true;
+            appleLoginBtn.style.opacity = "0.4";
+            appleLoginBtn.title = "Apple Login only available on Apple devices";
         }
-    })
-    .catch((error) => {
-        console.error("Redirect login error:", error);
-        errorMessage.style.color = "#F87171";
-        errorMessage.textContent = "⚠️ Login failed. Please try again.";
-    });
 
-    const googleProvider = new GoogleAuthProvider();
-    const appleProvider = new OAuthProvider('apple.com');
+        // Check for redirect result on page load
+        getRedirectResult(auth)
+            .then((result) => {
+                if (result && result.user) {
+                    console.log("✅ Redirect login success:", result.user.email);
+                    showMessage(`✅ Welcome back, ${result.user.email}!`, 'success');
+                    setTimeout(() => {
+                        window.location.href = "index.html";
+                    }, 1500);
+                }
+            })
+            .catch((error) => {
+                console.error("❌ Redirect login error:", error);
+                showMessage("⚠️ Login failed. Please try again.", 'error');
+            });
 
+        // Helper function to show messages
+        function showMessage(text, type = 'error') {
+            errorMessage.textContent = text;
+            errorMessage.style.color = type === 'success' ? '#10B981' : '#F87171';
+        }
 
-    // UI elements
-    const loginForm = document.getElementById('login-form');
-    const emailInput = document.getElementById('email-input');
-    const passwordInput = document.getElementById('password-input');
-    const errorMessage = document.getElementById('error-message');
-    const googleLoginBtn = document.getElementById('google-login-btn');
-    const logoText = document.getElementById('logo-text');
-    const authContainer = document.getElementById('auth-container');
+        // Helper function to disable/enable buttons
+        function setButtonState(button, disabled) {
+            button.disabled = disabled;
+            button.style.opacity = disabled ? '0.6' : '1';
+        }
 
-    // Handle Email/Password login
-    loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        errorMessage.textContent = '';
-        
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
+        // Email/Password Login
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showMessage('', 'error');
+            
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
 
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            setButtonState(submitBtn, true);
 
-            // ✅ Show success message on frontend
-            errorMessage.style.color = "#10B981"; // green
-            errorMessage.textContent = `✅ Welcome back, ${user.email}! Redirecting...`;
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-            // Redirect after 2 seconds
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 2000);
+                showMessage(`✅ Welcome back, ${user.email}! Redirecting...`, 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
 
-        } catch (error) {
-            let message;
-            switch (error.code) {
-                case 'auth/user-not-found':
-                case 'auth/wrong-password':
-                case 'auth/invalid-credential':
-                    message = '❌ Invalid email or password.';
-                    break;
-                case 'auth/invalid-email':
-                    message = '⚠️ Please enter a valid email address.';
-                    break;
-                default:
-                    message = '⚠️ Login failed. Please try again.';
-                    break;
+            } catch (error) {
+                let message;
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                    case 'auth/wrong-password':
+                    case 'auth/invalid-credential':
+                        message = '❌ Invalid email or password.';
+                        break;
+                    case 'auth/invalid-email':
+                        message = '⚠️ Please enter a valid email address.';
+                        break;
+                    case 'auth/too-many-requests':
+                        message = '⚠️ Too many attempts. Please try again later.';
+                        break;
+                    default:
+                        message = '⚠️ Login failed. Please try again.';
+                        break;
+                }
+                showMessage(message, 'error');
+                console.error("Login Error:", error);
+            } finally {
+                setButtonState(submitBtn, false);
             }
-            errorMessage.style.color = "#F87171"; // red
-            errorMessage.textContent = message;
-            console.error("Login Error:", error);
-        }
-    });
+        });
 
-    // Google Login
-    googleLoginBtn.addEventListener('click', async () => {
-    errorMessage.textContent = '';
-    try {
-        await signInWithRedirect(auth, googleProvider);
-    } catch (error) {
-        console.error("Google Redirect Error:", error);
-        errorMessage.style.color = "#F87171";
-        errorMessage.textContent = "⚠️ Google login failed. Please try again.";
-    }
-});
-    // Apple Login (Safari / Apple devices only)
-document.getElementById('apple-login-btn').addEventListener('click', async () => {
-    errorMessage.textContent = '';
-    try {
-        await signInWithRedirect(auth, appleProvider);
-    } catch (error) {
-        console.error("Apple Login Error:", error);
-        errorMessage.style.color = "#F87171";
-        errorMessage.textContent = "⚠️ Apple login failed.";
-    }
-});
+        // Google Login - Smart method selection
+        googleLoginBtn.addEventListener('click', async () => {
+            showMessage('', 'error');
+            setButtonState(googleLoginBtn, true);
 
+            try {
+                // Use popup for desktop, redirect for mobile
+                if (isMobile) {
+                    console.log('📱 Using redirect for mobile...');
+                    await signInWithRedirect(auth, googleProvider);
+                } else {
+                    console.log('💻 Using popup for desktop...');
+                    try {
+                        const result = await signInWithPopup(auth, googleProvider);
+                        console.log("✅ Google login success:", result.user.email);
+                        showMessage(`✅ Welcome, ${result.user.email}!`, 'success');
+                        setTimeout(() => {
+                            window.location.href = "index.html";
+                        }, 1500);
+                    } catch (popupError) {
+                        // Fallback to redirect if popup blocked
+                        if (popupError.code === 'auth/popup-blocked' || 
+                            popupError.code === 'auth/popup-closed-by-user') {
+                            console.log('🔄 Popup blocked, trying redirect...');
+                            await signInWithRedirect(auth, googleProvider);
+                        } else {
+                            throw popupError;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("❌ Google Login Error:", error);
+                let message = "⚠️ Google login failed. ";
+                
+                if (error.code === 'auth/popup-blocked') {
+                    message += "Please allow popups for this site.";
+                } else if (error.code === 'auth/unauthorized-domain') {
+                    message += "This domain is not authorized. Please contact support.";
+                } else if (error.code === 'auth/operation-not-allowed') {
+                    message += "Google login is not enabled. Please contact support.";
+                } else {
+                    message += "Please try again.";
+                }
+                
+                showMessage(message, 'error');
+            } finally {
+                setButtonState(googleLoginBtn, false);
+            }
+        });
 
+        // Apple Login - Only for Apple devices
+        appleLoginBtn.addEventListener('click', async () => {
+            if (!isAppleDevice) {
+                showMessage("⚠️ Apple login only works on Apple devices.", 'error');
+                return;
+            }
 
-    // Auth State Handling
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            if (logoText) logoText.style.display = 'inline';
-            authContainer.innerHTML = `<a href="profile.html" class="profile-icon-btn" title="Profile">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </a>`;
-        } else {
-            if (logoText) logoText.style.display = 'none';
-            authContainer.innerHTML = `<a href="login.html" class="profile-icon-btn active" title="Login">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </a>`;
-        }
-    });
-</script>
+            showMessage('', 'error');
+            setButtonState(appleLoginBtn, true);
 
+            try {
+                // Always use redirect for Apple (more reliable on iOS)
+                console.log('🍎 Using redirect for Apple login...');
+                await signInWithRedirect(auth, appleProvider);
+            } catch (error) {
+                console.error("❌ Apple Login Error:", error);
+                let message = "⚠️ Apple login failed. ";
+                
+                if (error.code === 'auth/unauthorized-domain') {
+                    message += "This domain is not authorized.";
+                } else {
+                    message += "Please try again.";
+                }
+                
+                showMessage(message, 'error');
+            } finally {
+                setButtonState(appleLoginBtn, false);
+            }
+        });
+
+        // Auth State Handling
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log('✅ User logged in:', user.email);
+                if (logoText) logoText.style.display = 'inline';
+                authContainer.innerHTML = `
+                    <a href="profile.html" class="profile-icon-btn" title="Profile">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>`;
+            } else {
+                console.log('❌ No user logged in');
+                if (logoText) logoText.style.display = 'none';
+                authContainer.innerHTML = `
+                    <a href="login.html" class="profile-icon-btn active" title="Login">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>`;
+            }
+        });
+    </script>
 </body>
 </html>
