@@ -17,6 +17,8 @@ import numpy as np
 from PIL import Image
 import pandas as pd
 import gc
+import gdown
+
 
 # TensorFlow
 try:
@@ -62,75 +64,42 @@ IMG_SIZE = 224
 # ==================== MODEL LOADER WITH GOOGLE DRIVE SUPPORT ====================
 
 def load_cnn_model():
-    """Load trained CNN model with Google Drive fallback"""
+    """Load trained CNN model with automatic Google Drive download"""
     global cnn_model
-    
+
     if not CNN_AVAILABLE:
         print("⚠️ CNN unavailable - TensorFlow not installed")
         return False
-    
-    # Try multiple model file names
-    possible_paths = [
-        os.path.join(BASE_DIR, "best_model.h5"),
-        os.path.join(MODEL_DIR, "best_model.h5"),
-        os.path.join(BASE_DIR, "cancer_classifier.h5"),
-        os.path.join(MODEL_DIR, "cancer_classifier.h5")
-    ]
-    
-    model_found = False
-    model_path = None
-    for path in possible_paths:
-        if os.path.exists(path):
-            model_found = True
-            model_path = path
-            print(f"📂 Found model at: {path}")
-            break
-    
-    # Download from Google Drive if not found
-    if not model_found:
+
+    model_path = os.path.join(MODEL_DIR, "best_model.h5")
+
+    # 🔽 Download model if not present (ZIP + GitHub safe)
+    if not os.path.exists(model_path):
         print("📥 Model not found locally. Downloading from Google Drive...")
-        model_path = os.path.join(BASE_DIR, "best_model.h5")
-        try:
-            import gdown
-            # ⚠️ REPLACE 'YOUR_FILE_ID' with your actual Google Drive FILE_ID
-            file_id = "1TdAVFFXaJuoWb7nBeCBV6Pu9dnlQ2rd9"
-            
-            print(f"⬇️ Downloading model from Google Drive...")
-            gdown.download(
-                f"https://drive.google.com/uc?id={file_id}",
-                model_path,
-                quiet=False
-            )
-            print("✅ Model downloaded successfully!")
-        except ImportError:
-            print("❌ gdown not installed. Run: pip install gdown")
-            return False
-        except Exception as e:
-            print(f"❌ Download failed: {e}")
-            print(f"💡 Make sure:")
-            print(f"   1. File is shared publicly on Google Drive")
-            print(f"   2. FILE_ID is correct")
-            print(f"   3. gdown is installed: pip install gdown")
-            return False
-    
-    # Load model
+        os.makedirs(MODEL_DIR, exist_ok=True)
+
+        file_id = "1TdAVFFXaJuoWb7nBeCBV6Pu9dnlQ2rd9"  # your Drive file ID
+        gdown.download(
+            f"https://drive.google.com/uc?id={file_id}",
+            model_path,
+            quiet=False
+        )
+
     try:
         print(f"🔄 Loading model from: {model_path}")
         cnn_model = keras.models.load_model(model_path, compile=False)
-        
-        # Recompile
         cnn_model.compile(
-            optimizer='adam',
-            loss='binary_crossentropy',
-            metrics=['accuracy']
+            optimizer="adam",
+            loss="binary_crossentropy",
+            metrics=["accuracy"]
         )
-        print(f"✅ CNN model loaded successfully!")
+        print("✅ CNN model loaded successfully!")
         return True
+
     except Exception as e:
         print(f"❌ Error loading model: {e}")
-        import traceback
-        traceback.print_exc()
         return False
+
 
 # ==================== SMART IMAGE TYPE DETECTION ====================
 
