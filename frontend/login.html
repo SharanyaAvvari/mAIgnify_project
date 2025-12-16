@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mAIgnify - Login</title>
-
     <link rel="icon" href="assets/maignify-logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
     <style>
         #login-page {
             background-image: url('assets/medical-background.jpg');
@@ -19,152 +17,254 @@
             background-repeat: no-repeat;
             position: relative;
         }
+        
         #login-page::before {
             content: '';
             position: absolute;
-            inset: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-color: rgba(17, 24, 39, 0.85);
             z-index: 1;
         }
+        
         .login-container {
             position: relative;
             z-index: 2;
         }
+        
+        .login-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-logo img {
+            height: 80px;
+            margin-bottom: 1rem;
+        }
+        
+        .login-logo h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0;
+        }
     </style>
 </head>
-
 <body>
+    <header class="header">
+        <nav class="container navbar">
+            <a href="index.html" class="logo">
+                <img src="assets/maignify-logo.png" alt="mAIgnify Logo">
+                <span id="logo-text">mAIgnify</span>
+            </a>
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="agents.html">Agents</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li id="auth-container" class="auth-links"></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-<header class="header">
-    <nav class="container navbar">
-        <a href="index.html" class="logo">
-            <img src="assets/maignify-logo.png" alt="mAIgnify Logo">
-            <span id="logo-text">mAIgnify</span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="features.html">Features</a></li>
-            <li><a href="agents.html">Agents</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li id="auth-container"></li>
-        </ul>
-    </nav>
-</header>
+    <main id="login-page">
+        <div class="login-container">
+            <div class="login-logo">
+                <img src="assets/maignify-logo.png" alt="mAIgnify Logo">
+                <h1>mAIgnify</h1>
+            </div>
+            
+            <h2>Login to mAIgnify</h2>
+            <p>Access your workflows and collaborate with our AI agents.</p>
 
-<main id="login-page">
-    <div class="login-container">
+            <form id="login-form">
+                <input type="email" id="email-input" placeholder="Email" required>
+                <input type="password" id="password-input" placeholder="Password" required>
+                <div class="forgot-password-link">
+                    <a href="forgot-password.html">Forgot Password?</a>
+                </div>
+                <button type="submit" class="login-cta-btn">Login</button>
+            </form>
+            <p id="error-message" style="color: #F87171; min-height: 1.2em;"></p>
 
-        <h2>Login to mAIgnify</h2>
+            <div class="divider">or continue with</div>
 
-        <form id="login-form">
-            <input type="email" id="email-input" placeholder="Email" required>
-            <input type="password" id="password-input" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
+            <div class="social-login-options">
+                <button id="google-login-btn" class="social-login-btn">
+                    <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.222,0-9.617-3.356-11.283-7.943l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C39.999,35.533,44,29.891,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
+                    Google
+                </button>
+                <button id="apple-login-btn" class="social-login-btn" title="Apple Login Not Available">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.3,12.18c0.14-1.55-1.12-2.83-1.2-2.88c-0.65-0.75-1.7-1.23-2.73-1.25c-1.42-0.12-2.73,0.76-3.43,0.76 c-0.73,0-1.7-0.74-2.88-0.69c-1.33,0.06-2.58,0.75-3.28,1.65c-1.46,1.86-1.88,4.55-1.1,6.86c0.41,1.19,1.17,2.44,2.13,3.28 c0.78,0.68,1.6,1.05,2.65,1.06c1.18,0,1.63-0.66,3.03-0.66c1.38,0,1.75,0.66,3.05,0.66c1.1,0,1.9-0.41,2.65-1.08 c0.93-0.82,1.58-1.92,1.96-3.03C21.33,15.71,21.13,13.52,19.3,12.18z M15.45,7.86c0.61-0.75,1.03-1.8,0.9-2.88 c-0.84,0.06-1.88,0.65-2.52,1.39c-0.54,0.64-1.15,1.78-0.95,2.78C13.72,9.21,14.73,8.65,15.45,7.86z"></path></svg>
+                    Apple
+                </button>
+            </div>
 
-        <p id="error-message"></p>
+            <p class="signup-link">Don't have an account? <a href="signup.html">Sign up</a></p>
+        </div>
+    </main>
 
-        <div class="divider">or continue with</div>
+    <footer>
+        <div class="container"><p>&copy; 2025 mAIgnify Project.</p></div>
+    </footer>
 
-        <button id="google-login-btn">Google</button>
-        <button id="apple-login-btn">Apple</button>
-
-    </div>
-</main>
-
-<footer>
-    <p>&copy; 2025 mAIgnify Project</p>
-</footer>
-
-<!-- ================= FIREBASE AUTH SCRIPT ================= -->
-<script type="module">
-
-/* ========= DEVICE CHECK ========= */
+    <script type="module">
+        // Disable Apple Login on non-Apple devices
 const isAppleDevice = /Mac|iPhone|iPad/i.test(navigator.userAgent);
-const appleBtn = document.getElementById("apple-login-btn");
-if (!isAppleDevice) {
-    appleBtn.disabled = true;
-    appleBtn.style.opacity = "0.5";
-    appleBtn.title = "Apple Login works only on Apple devices";
-}
 
-/* ========= FIREBASE IMPORTS ========= */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-import {
-    getAuth,
+if (!isAppleDevice) {
+    const appleBtn = document.getElementById('apple-login-btn');
+    if (appleBtn) {
+        appleBtn.disabled = true;
+        appleBtn.style.opacity = "0.5";
+        appleBtn.title = "Apple Login works only on Apple devices (Safari)";
+    }
+}
+import { getRedirectResult } from 
+"https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+import { 
+    getAuth, 
     GoogleAuthProvider,
-    OAuthProvider,
-    signInWithRedirect,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    getRedirectResult
+    OAuthProvider,          // 👈 ADD
+    signInWithPopup,
+    signInWithRedirect,     // 👈 ADD
+    signInWithEmailAndPassword, 
+    onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
-/* ========= FIREBASE CONFIG ========= */
-const firebaseConfig = {
-    apiKey: "AIzaSyCQ7B-0Hg1SRRaclGxmaDisnld1nFtMuG4",
-    authDomain: "maistro-e93eb.firebaseapp.com",
-    projectId: "maistro-e93eb",
-    storageBucket: "maistro-e93eb.firebasestorage.app",
-    messagingSenderId: "809190380385",
-    appId: "1:809190380385:web:8d545d7595b9eef5076b20"
-};
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyCQ7B-0Hg1SRRaclGxmaDisnld1nFtMuG4",
+        authDomain: "maistro-e93eb.firebaseapp.com",
+        projectId: "maistro-e93eb",
+        storageBucket: "maistro-e93eb.firebasestorage.app",
+        messagingSenderId: "809190380385",
+        appId: "1:809190380385:web:8d545d7595b9eef5076b20",
+        measurementId: "G-9FE2X87ER5"
+    };
 
-/* ========= INIT ========= */
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
-const appleProvider = new OAuthProvider("apple.com");
-
-/* ========= UI ========= */
-const loginForm = document.getElementById("login-form");
-const emailInput = document.getElementById("email-input");
-const passwordInput = document.getElementById("password-input");
-const errorMessage = document.getElementById("error-message");
-const googleBtn = document.getElementById("google-login-btn");
-
-/* ========= EMAIL LOGIN ========= */
-loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    errorMessage.textContent = "Logging in...";
-    try {
-        await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-        window.location.href = "index.html";
-    } catch (err) {
-        errorMessage.textContent = err.message;
-    }
-});
-
-/* ========= GOOGLE LOGIN ========= */
-googleBtn.addEventListener("click", async () => {
-    await signInWithRedirect(auth, googleProvider);
-});
-
-/* ========= APPLE LOGIN ========= */
-appleBtn.addEventListener("click", async () => {
-    await signInWithRedirect(auth, appleProvider);
-});
-
-/* ========= HANDLE REDIRECT RESULT (🔥 CRITICAL FIX) ========= */
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    // 🔥 REQUIRED for mobile redirect login
 getRedirectResult(auth)
     .then((result) => {
         if (result && result.user) {
-            console.log("✅ Login success:", result.user.email);
+            console.log("Google/Apple login success:", result.user.email);
             window.location.href = "index.html";
         }
     })
     .catch((error) => {
-        console.error("❌ Redirect error:", error);
-        errorMessage.textContent = "Login failed. Please try again.";
+        console.error("Redirect login error:", error);
+        errorMessage.style.color = "#F87171";
+        errorMessage.textContent = "⚠️ Login failed. Please try again.";
     });
 
-/* ========= AUTH STATE ========= */
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        console.log("User logged in:", user.email);
+    const googleProvider = new GoogleAuthProvider();
+    const appleProvider = new OAuthProvider('apple.com');
+
+
+    // UI elements
+    const loginForm = document.getElementById('login-form');
+    const emailInput = document.getElementById('email-input');
+    const passwordInput = document.getElementById('password-input');
+    const errorMessage = document.getElementById('error-message');
+    const googleLoginBtn = document.getElementById('google-login-btn');
+    const logoText = document.getElementById('logo-text');
+    const authContainer = document.getElementById('auth-container');
+
+    // Handle Email/Password login
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorMessage.textContent = '';
+        
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // ✅ Show success message on frontend
+            errorMessage.style.color = "#10B981"; // green
+            errorMessage.textContent = `✅ Welcome back, ${user.email}! Redirecting...`;
+
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+
+        } catch (error) {
+            let message;
+            switch (error.code) {
+                case 'auth/user-not-found':
+                case 'auth/wrong-password':
+                case 'auth/invalid-credential':
+                    message = '❌ Invalid email or password.';
+                    break;
+                case 'auth/invalid-email':
+                    message = '⚠️ Please enter a valid email address.';
+                    break;
+                default:
+                    message = '⚠️ Login failed. Please try again.';
+                    break;
+            }
+            errorMessage.style.color = "#F87171"; // red
+            errorMessage.textContent = message;
+            console.error("Login Error:", error);
+        }
+    });
+
+    // Google Login
+    googleLoginBtn.addEventListener('click', async () => {
+    errorMessage.textContent = '';
+    try {
+        await signInWithRedirect(auth, googleProvider);
+    } catch (error) {
+        console.error("Google Redirect Error:", error);
+        errorMessage.style.color = "#F87171";
+        errorMessage.textContent = "⚠️ Google login failed. Please try again.";
+    }
+});
+    // Apple Login (Safari / Apple devices only)
+document.getElementById('apple-login-btn').addEventListener('click', async () => {
+    errorMessage.textContent = '';
+    try {
+        await signInWithRedirect(auth, appleProvider);
+    } catch (error) {
+        console.error("Apple Login Error:", error);
+        errorMessage.style.color = "#F87171";
+        errorMessage.textContent = "⚠️ Apple login failed.";
     }
 });
 
+
+
+    // Auth State Handling
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            if (logoText) logoText.style.display = 'inline';
+            authContainer.innerHTML = `<a href="profile.html" class="profile-icon-btn" title="Profile">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </a>`;
+        } else {
+            if (logoText) logoText.style.display = 'none';
+            authContainer.innerHTML = `<a href="login.html" class="profile-icon-btn active" title="Login">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </a>`;
+        }
+    });
 </script>
+
 </body>
 </html>
