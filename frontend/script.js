@@ -1,8 +1,8 @@
 // ========================================================================
 // COMPLETELY FIXED UPLOAD FORM - NO RESULT MIXING
 // ========================================================================
+const API_URL = "https://sharanyaavvari-maignify-backend.hf.space";
 
-const API_URL = "http://127.0.0.1:8000";
 
 const uploadForm = document.getElementById("uploadForm");
 const fileInput = document.getElementById("fileInput");
