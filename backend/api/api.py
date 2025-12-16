@@ -1,19 +1,28 @@
 """
-API.py - Alternative Backend (Gemini REMOVED)
+api.py - Compatibility Backend for Frontend
 
-⚠️ NOTE: It's recommended to use main.py instead of this file.
-This file has been fixed to remove Gemini dependency.
+✔ Redirects legacy /api/process calls to the real /predict logic
+✔ No Gemini
+✔ Uses same ML pipeline as main.py
+✔ Prevents 501 frontend errors
 """
 
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import List, Optional
+from datetime import datetime
+import uuid
+import shutil
 import os
 
-app = FastAPI(title="mAIstro API (Legacy)", version="0.5.0")
+# Import predict logic from main.py
+from main import predict  # 👈 VERY IMPORTANT
 
-# CORS
+app = FastAPI(
+    title="mAIgnify API (Compatibility Layer)",
+    version="1.0.0"
+)
+
+# ==================== CORS ====================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -22,69 +31,61 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ==================== REMOVED GEMINI ====================
-# ALL Gemini code has been removed
-# NO external API dependencies
-# ======================================================
-
-class TaskRequest(BaseModel):
-    prompt: str
-    file_ids: List[str] = []
-
+# ==================== ROOT ====================
 @app.get("/")
 async def root():
     return {
-        "message": "mAIstro Legacy API",
-        "warning": "This is the old API file. Please use main.py instead",
-        "recommendation": "Run: python main.py"
+        "status": "running",
+        "message": "mAIgnify API compatibility layer",
+        "forwarding": "/api/process → /predict",
+        "timestamp": datetime.now().isoformat()
     }
 
+# ==================== FRONTEND COMPAT API ====================
 @app.post("/api/process")
-async def process_task(request: TaskRequest):
+async def process_legacy(file: UploadFile = File(...)):
     """
-    Process task - LOCAL ONLY (no external APIs)
+    Legacy endpoint used by frontend.
+    Internally forwards request to /predict
     """
-    return {
-        "status": "processed",
-        "message": "Task completed locally",
-        "agent": "local_agent",
-        "response": f"Processed: {request.prompt}",
-        "note": "Using local processing only - no external APIs"
-    }
 
+    try:
+        # Call main.py predict directly
+        response = await predict(file)
+
+        return {
+            "status": "success",
+            "source": "legacy_api",
+            "data": response
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Legacy API failed: {str(e)}"
+        )
+
+# ==================== STATUS ====================
 @app.get("/api/status")
-async def get_status():
-    """Check API status"""
+async def api_status():
     return {
         "status": "online",
-        "version": "0.5.0",
-        "external_apis": "None (all local)",
-        "recommendation": "Use main.py for full functionality"
-    }
-
-@app.get("/api/available")
-async def available_agents():
-    """List available agents"""
-    return {
-        "agents": ["local_eda", "local_classifier"],
-        "note": "For full agent system, use main.py"
+        "mode": "compatibility",
+        "real_endpoint": "/predict",
+        "timestamp": datetime.now().isoformat()
     }
 
 # ==================== STARTUP ====================
-
 @app.on_event("startup")
 async def startup():
-    print("\n" + "="*60)
-    print("⚠️  Running LEGACY api.py")
-    print("="*60)
-    print("❌ Gemini code has been removed")
-    print("✅ No external API dependencies")
-    print("💡 RECOMMENDED: Use main.py instead")
-    print("   Run: python main.py")
-    print("="*60 + "\n")
+    print("\n" + "=" * 60)
+    print("✅ mAIgnify API compatibility layer started")
+    print("🔁 /api/process → /predict")
+    print("🚫 Gemini: REMOVED")
+    print("✔ Model handled by main.py")
+    print("=" * 60 + "\n")
 
+# ==================== RUN ====================
 if __name__ == "__main__":
     import uvicorn
-    print("⚠️  Starting legacy API (api.py)")
-    print("💡 Recommendation: Use main.py instead for full features")
     uvicorn.run(app, host="0.0.0.0", port=8000)

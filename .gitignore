@@ -21,6 +21,7 @@ backend/uploads/
 
 # Build / app cache
 mAIstro/
+backend/models/
 
 
 @"
