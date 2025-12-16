@@ -112,14 +112,29 @@
     </footer>
 
     <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { 
-        getAuth, 
-        GoogleAuthProvider, 
-        signInWithPopup, 
-        signInWithEmailAndPassword, 
-        onAuthStateChanged 
-    } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        // Disable Apple Login on non-Apple devices
+const isAppleDevice = /Mac|iPhone|iPad/i.test(navigator.userAgent);
+
+if (!isAppleDevice) {
+    const appleBtn = document.getElementById('apple-login-btn');
+    if (appleBtn) {
+        appleBtn.disabled = true;
+        appleBtn.style.opacity = "0.5";
+        appleBtn.title = "Apple Login works only on Apple devices (Safari)";
+    }
+}
+
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+import { 
+    getAuth, 
+    GoogleAuthProvider,
+    OAuthProvider,          // 👈 ADD
+    signInWithPopup,
+    signInWithRedirect,     // 👈 ADD
+    signInWithEmailAndPassword, 
+    onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
     
     const firebaseConfig = {
         apiKey: "AIzaSyCQ7B-0Hg1SRRaclGxmaDisnld1nFtMuG4",
@@ -134,6 +149,8 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const googleProvider = new GoogleAuthProvider();
+    const appleProvider = new OAuthProvider('apple.com');
+
 
     // UI elements
     const loginForm = document.getElementById('login-form');
@@ -188,22 +205,28 @@
 
     // Google Login
     googleLoginBtn.addEventListener('click', async () => {
-        errorMessage.textContent = '';
-        try {
-            const result = await signInWithPopup(auth, googleProvider);
-            const user = result.user;
-            errorMessage.style.color = "#10B981";
-            errorMessage.textContent = `✅ Welcome ${user.displayName || 'User'}! Redirecting...`;
+    errorMessage.textContent = '';
+    try {
+        await signInWithRedirect(auth, googleProvider);
+    } catch (error) {
+        console.error("Google Redirect Error:", error);
+        errorMessage.style.color = "#F87171";
+        errorMessage.textContent = "⚠️ Google login failed. Please try again.";
+    }
+});
+    // Apple Login (Safari / Apple devices only)
+document.getElementById('apple-login-btn').addEventListener('click', async () => {
+    errorMessage.textContent = '';
+    try {
+        await signInWithRedirect(auth, appleProvider);
+    } catch (error) {
+        console.error("Apple Login Error:", error);
+        errorMessage.style.color = "#F87171";
+        errorMessage.textContent = "⚠️ Apple login failed.";
+    }
+});
 
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 2000);
-        } catch (error) {
-            console.error("Google Login Error:", error);
-            errorMessage.style.color = "#F87171";
-            errorMessage.textContent = "⚠️ Google login failed. Please try again.";
-        }
-    });
+
 
     // Auth State Handling
     onAuthStateChanged(auth, (user) => {
